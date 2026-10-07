@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en" class="dark" style="color-scheme: dark;"><head><meta charset="utf-8">
+<title>قیمت لحظه‌ای تتر (USDT) امروز به تومان و دلار</title>
+<meta name="description" content="قیمت تتر امروز، بررسی نوسانات دلار در بازار و مرجع دقیق قیمت لحظه ای USDT. آخرین تغییرات نرخ تتر به تومان را دنبال کنید.">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"FAQPage","mainEntity":{"@type":"Question","name":"هر تتر چند تومان است؟","acceptedAnswer":{"@type":"Answer","text":"در زمان نگارش این مطلب، هر تتر برابر با ۱۲۳,۹۹۵ تومان است. این قیمت در هر لحظه متغیر است."}}}]</script>
+<style>
+  /*
+    Minimal stand-in for the two Tailwind utilities that ARE the trap here.
+    Without a stylesheet both cards would render simultaneously and the fixture
+    would stop reproducing the real page, where exactly one is on screen at any
+    width. Verified live: at 1440px card 1 is zero-size under display:none and
+    card 2 is on screen; at 900px they swap.
+
+    Both directions are needed. `xl:hidden` means hidden at >=1280px only, and
+    `max-xl:hidden` means hidden BELOW 1280px only — writing only the min-width
+    half would leave both cards visible on a narrow viewport.
+  */
+  @media (min-width: 1280px) {
+    .xl\:hidden { display: none; }
+    .max-xl\:hidden { display: revert; }
+  }
+  @media (max-width: 1279px) {
+    .max-xl\:hidden { display: none; }
+    .xl\:hidden { display: revert; }
+  }
+</style>
+</head><body>
+
+<!--
+  Asretether-shaped fixture.
+
+  TWO COPIES OF ONE PRICE, EXACTLY ONE VISIBLE AT ANY WIDTH — that is the whole
+  structural point here, and the adapter probes both rather than guessing which
+  one the viewport will show.
+
+  THE TRAPS:
+    1. the 24h high/low tiles, comma-grouped and non-zero, same shape as the
+       price — and the high repeated again in the market-information table,
+       where its unit is «تتر» rather than تومان;
+    2. the STALE FAQ price `۱۲۳,۹۹۵ تومان` — Persian digits, an ASCII comma,
+       and the literal word تومان. It matches this monitor's price pattern
+       perfectly and sits at roughly half the live rate;
+    3. the dollar-peg card, «آخرین قیمت تتر به تتر» → `1`, whose caption is the
+       near-twin of the real one;
+    4. the RSC payload's `price_sell`, a second real Toman price never rendered.
+-->
+
+<!-- ===== COPY 1: the mobile card (xl:hidden) ===== -->
+<div class="grid max-xl:gap-6 lg:grid-cols-[1fr_400px] xl:grid-cols-1">
+  <div class="text-card-foreground border border-border-tertiary rounded-2xl p-fit flex flex-col gap-5 py-5 order-1 lg:order-2 xl:hidden">
+    <div class="grid gap-4">
+
+      <div class="border-border-primary flex flex-col gap-3 rounded-2xl border px-4 py-3">
+        <div class="flex items-center justify-between gap-2"><h3 class="text-content-secondary text-sm">آخرین قیمت تتر به تومان</h3></div>
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-end gap-2">
+            <p class="text-content-primary ltr text-2xl font-semibold">268,001</p>
+            <span class="text-content-secondary mb-1 text-xs">تومان</span>
+          </div>
+          <!-- DECOY: the change badge, split by a React text-node marker. -->
+          <div class="flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium bg-surface-overlay-positive text-content-brand">
+            <span class="ltr">0<!-- -->%</span>
+            <span class="flex size-5 items-center justify-center rounded-full"><svg class="lucide lucide-triangle size-3" aria-hidden="true"></svg></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DECOY: the dollar peg. Its caption is the near-twin of the real one. -->
+      <div class="border-border-primary flex flex-col gap-3 rounded-2xl border px-4 py-3">
+        <div class="flex items-center justify-between gap-2"><h3 class="text-content-secondary text-sm">آخرین قیمت تتر به تتر</h3></div>
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-end gap-2"><p class="text-content-primary ltr text-2xl font-semibold">1</p><span class="text-content-secondary mb-1 text-xs">USDT</span></div>
+        </div>
+      </div>
+
+      <!-- DECOY: 24h high and low. Comma-grouped, non-zero, identical shape. -->
+      <div class="border-border-primary flex flex-col gap-3 rounded-2xl border px-4 py-3">
+        <div class="flex items-center justify-between gap-2"><h3 class="text-content-secondary text-sm">بیشترین قیمت (۲۴ ساعت)</h3></div>
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-content-primary ltr self-start text-sm font-medium">USDT<!-- --> <!-- -->273,361</span>
+        </div>
+      </div>
+      <div class="border-border-primary flex flex-col gap-3 rounded-2xl border px-4 py-3">
+        <div class="flex items-center justify-between gap-2"><h3 class="text-content-secondary text-sm">کمترین قیمت (۲۴ ساعت)</h3></div>
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-content-primary ltr self-start text-sm font-medium">USDT<!-- --> <!-- -->260,190</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== COPY 2: the desktop sticky sidebar card (max-xl:hidden) ===== -->
+<div class="flex flex-col gap-6 sticky top-6">
+  <div class="text-card-foreground border border-border-tertiary rounded-2xl p-fit flex flex-col gap-5 py-5 max-xl:hidden">
+    <div class="grid gap-4">
+
+      <!-- Byte-identical inner markup to copy 1, as on the live page. -->
+      <div class="border-border-primary flex flex-col gap-3 rounded-2xl border px-4 py-3">
+        <div class="flex items-center justify-between gap-2"><h3 class="text-content-secondary text-sm">آخرین قیمت تتر به تومان</h3></div>
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-end gap-2">
+            <p class="text-content-primary ltr text-2xl font-semibold">268,001</p>
+            <span class="text-content-secondary mb-1 text-xs">تومان</span>
+          </div>
+          <div class="flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium bg-surface-overlay-positive text-content-brand">
+            <span class="ltr">0<!-- -->%</span>
+            <span class="flex size-5 items-center justify-center rounded-full"><svg class="lucide lucide-triangle size-3" aria-hidden="true"></svg></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DECOY: the market-information table, which repeats the 24h range. -->
+  <div class="border flex flex-col overflow-hidden rounded-2xl px-4 py-6 bg-surface-secondary">
+    <h2>اطلاعات بازار و تاریخچه قیمت تتر</h2>
+    <div class="flex items-center justify-between"><span>بالاترین قیمت در 24 ساعت گذشته</span><span class="shrink-0 font-medium" dir="rtl">273,361 تتر</span></div>
+    <div class="flex items-center justify-between"><span>پایین‌ترین قیمت در 24 ساعت گذشته</span><span class="shrink-0 font-medium" dir="rtl">260,190 تتر</span></div>
+    <div class="flex items-center justify-between"><span>تغییرات قیمت در 24 ساعت گذشته</span><span class="shrink-0 font-medium" dir="ltr">% 0</span></div>
+  </div>
+</div>
+
+<!-- DECOY IN PROSE — authored content that will never track the market. -->
+<article>
+  <h2>هر تتر چند تومان است؟</h2>
+  <p>در زمان نگارش این مطلب، هر تتر برابر با <strong>۱۲۳,۹۹۵ تومان</strong> است. این قیمت در هر لحظه متغیر است.</p>
+  <!--
+    The three preloaded editorial illustrations. Their alts say what they are,
+    and their digits are raster, not DOM text — nothing here is scrapable.
+  -->
+  <p><img src="https://storage.asretether.com/price/usdt/1.webp" alt="عوامل موثر بر قیمت تتر"></p>
+  <p><img src="https://storage.asretether.com/price/usdt/2.webp" alt="قیمت لحظه ای تتر"></p>
+  <p><img src="https://storage.asretether.com/price/usdt/3.webp" alt="قیمت تتر"></p>
+</article>
+
+<!--
+  NOT PROBED — recorded so the exclusion is visible and testable.
+
+  The React flight payload carries `price.price_buy` (the displayed figure,
+  unformatted) and `price.price_sell` — a SECOND, DIFFERENT, fully-formed Toman
+  price that is never rendered anywhere, because the market is closed and the
+  two sides diverge. Payload disclosure is a note, not a probe.
+-->
+<script>self.__next_f=self.__next_f||[];self.__next_f.push([1,"7:[\"{\\\"symbol\\\":\\\"USDT-IRT\\\",\\\"high_24h\\\":\\\"273361\\\",\\\"low_24h\\\":\\\"260190\\\",\\\"price\\\":{\\\"price_buy\\\":\\\"268001\\\",\\\"price_sell\\\":\\\"265500\\\",\\\"price_in_tether\\\":\\\"1.0000\\\",\\\"is_open\\\":false}}\"]"])</script>
+
+<!--
+  VERIFIED ABSENT from the live page, so a future change is noticeable:
+    - any concealment on either price copy (no filter, opacity, mask,
+      clip-path or blur anywhere on or above them)
+    - any rendered chart: no <canvas>, no inline SVG with <text> axis labels,
+      no third-party embed. The «نمودار قیمت» card degrades to a dimmed logo.
+    - a price in any meta tag
+    - a price in a header ticker, hero, or footer
+    - any other coin's price on the page at all
+-->
+
+<!-- ===== DECOY: the 24h range ===== -->
+<!--
+  These two are comma-grouped and sit INSIDE the monitored band, which makes
+  them the most dangerous numbers on the page when the live slot is unreadable.
+  They live in DIFFERENT cards, with their own captions, so the shape-based
+  price lookup can never reach them — and the tests prove it.
+-->
+<section class="ttr-range">
+  <div class="border-border-primary flex flex-col gap-3 rounded-2xl border px-4 py-3">
+    <div class="flex items-center justify-between gap-2"><h3 class="text-content-secondary text-sm">بیشترین قیمت (۲۴ ساعت)</h3></div>
+    <div class="flex items-center justify-between gap-2">
+      <span class="text-content-primary ltr self-start text-sm font-medium">USDT<!-- --> <!-- -->275,338</span>
+    </div>
+  </div>
+  <div class="border-border-primary flex flex-col gap-3 rounded-2xl border px-4 py-3">
+    <div class="flex items-center justify-between gap-2"><h3 class="text-content-secondary text-sm">کمترین قیمت (۲۴ ساعت)</h3></div>
+    <div class="flex items-center justify-between gap-2">
+      <span class="text-content-primary ltr self-start text-sm font-medium">USDT<!-- --> <!-- -->261,278</span>
+    </div>
+  </div>
+</section>
+
+</body></html>

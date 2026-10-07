@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<title>تترلند | TetherLand | مرجع تخصصی خرید و فروش تتر در ایران</title>
+<meta name="description" content="تترلند، بزرگ‌ترین مرجع خرید تتر، فروش تتر و تبدیل ارزهای دیجیتال با کمترین کارمزد">
+</head><body>
+
+<!--
+  TetherLand-shaped fixture. Structure copied from the live page: the tether
+  price sits in `.chart-container > .chart > .top`, with the 24h stats in
+  `.downitems` as SIBLINGS of `.top` inside the same `.chart`, and the raw
+  price attribute on a span just OUTSIDE the chart container.
+
+  Values are the live ones (price 268,350 / max 268,800 / min 260,450 /
+  change ٪3.03), all corroborated by the anonymous v4 endpoint:
+      {"price":268350,"diff24d":"3.03","last24hMin":260450,"last24hMax":268800}
+
+  The point of this fixture is the TRAPS. Four of them sit within a few hundred
+  tomans of the real price:
+
+    #tetherMax24h      268,800   comma-grouped, 450 تومان ABOVE the real price
+    #tetherMin24h      260,450   comma-grouped
+    #tetherChange24h   ٪3.03     Persian percent sign FIRST — a lax numeric regex
+                                 reads `3.03` and calls it a price
+    .cskie[data-att]   268350    the raw price AGAIN, un-commaed, on an empty span.
+                                 A bare `\d+` sweep finds this and not the price.
+    #bazzarCalcPrice   0 تومان   "total" of an untouched calculator
+    22 carousel prices of which `.tether-price .price` (`84,640.3 تتر`) is itself
+                                 comma-grouped and non-zero.
+
+  `#currentPrice` matches exactly 1 element. Bare `.price` matches 24.
+-->
+
+<div class="home-hero">
+
+  <!-- ===== THE PRICE UNDER MONITORING ===== -->
+  <div class="chart-container">
+    <div class="chart">
+      <div class="top">
+        <img class="tether-icon" src=".../new-usdt-icon.svg" alt="">
+        <div class="right">
+          <span class="price" id="currentPrice">268,350 تومان</span>
+          <span class="title">نرخ تتر</span>
+        </div>
+        <div class="left">
+          <a class="btn-white" href="/tether-chart/">نمودار تتر</a>
+          <!--
+            The period switcher. Verified on the live page to contain NO sibling
+            price node — just the two arrow icons and the caption — so there is no
+            hidden-period price here, and we never click it.
+          -->
+          <div class="tether-info-table_period-box">
+            <span class="prev"><i class="icon icon-dropdown"></i></span>
+            <span class="title">24ساعت</span>
+            <span class="next"><i class="icon icon-dropdown"></i></span>
+          </div>
+        </div>
+      </div>
+
+      <span class="horz-line"></span>
+
+      <!-- ===== DECOYS: siblings of .top, inside the same .chart ===== -->
+      <div class="downitems">
+        <div class="downItem">
+          <div class="downItemUp greenLabel" id="tetherChange24hBox">
+            <i class="icon-g-than-sign"></i>
+            <span class="label" color="#F3B6AE" id="tetherChange24h">٪3.03</span>
+          </div>
+          <span class="labelType">تغییر</span>
+        </div>
+        <div class="downItem">
+          <div class="downItemUp">
+            <i class="icon-g-than-sign"></i>
+            <span class="label" color="#F3B6AE" id="tetherMax24h">268,800</span>
+          </div>
+          <span class="labelType">بالاترین</span>
+        </div>
+        <div class="downItem">
+          <div class="downItemUp">
+            <i class="icon icon-g-than-sign" style="transform: rotate(180deg);"></i>
+            <span class="label" color="#F3B6AE" id="tetherMin24h">260,450</span>
+          </div>
+          <span class="labelType">پایین ترین</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    DECOY: the raw rate again, un-commaed, on an EMPTY span just outside the
+    chart. On the live page it currently equals the visible price exactly
+    (268350 == 268,350), which is why reading it cannot be caught by comparing
+    values — provenance has to be proven some other way.
+    The adapter deliberately does not probe this element.
+  -->
+  <span class="cskie" data-att="268350"></span>
+
+  <!-- ===== DECOY: the untouched calculator total ===== -->
+  <div class="home-hero__calc">
+    <div class="labelContainer" id="normalLabel">
+      <span class="title">مبلغ کل</span>
+      <span class="dots">....................................</span>
+      <span class="price" id="bazzarCalcPrice">0 <span>تومان</span></span>
+    </div>
+  </div>
+</div>
+
+<!--
+  ===== DECOY: the asset carousel =====
+
+  11 cards x 2 prices = 22 elements. Together with #currentPrice and
+  #bazzarCalcPrice that is the 24 that bare `.price` matches.
+
+  The trap is `.tether-price .price`: those are "how many USDT per coin", and
+  `84,640.3 تتر` is comma-grouped AND non-zero. A sweep that grabs one of these
+  reports a fabricated violation.
+-->
+<section class="crypto-swiper-container">
+  <div class="swiper-wrapper">
+
+    <article class="crypto-card">
+      <div class="price-container">
+        <div class="toman-price"><span class="price">22,711,990,095</span><span class="unit">تومان</span></div>
+        <div class="tether-price"><span class="price">84,640.3</span><span class="unit">تتر</span></div>
+      </div>
+    </article>
+
+    <article class="crypto-card">
+      <div class="price-container">
+        <div class="toman-price"><span class="price">720,157,477.5</span><span class="unit">تومان</span></div>
+        <div class="tether-price"><span class="price">2,683.65</span><span class="unit">تتر</span></div>
+      </div>
+    </article>
+
+    <article class="crypto-card">
+      <div class="price-container">
+        <div class="toman-price"><span class="price">206,522,160</span><span class="unit">تومان</span></div>
+        <div class="tether-price"><span class="price">769.6</span><span class="unit">تتر</span></div>
+      </div>
+    </article>
+
+    <article class="crypto-card">
+      <div class="price-container">
+        <div class="toman-price"><span class="price">24,905.564</span><span class="unit">تومان</span></div>
+        <div class="tether-price"><span class="price">0.09</span><span class="unit">تتر</span></div>
+      </div>
+    </article>
+
+    <article class="crypto-card">
+      <div class="price-container">
+        <div class="toman-price"><span class="price">1.523</span><span class="unit">تومان</span></div>
+        <div class="tether-price"><span class="price">0.00</span><span class="unit">تتر</span></div>
+      </div>
+    </article>
+
+    <article class="crypto-card">
+      <div class="price-container">
+        <div class="toman-price"><span class="price">402,793.35</span><span class="unit">تومان</span></div>
+        <div class="tether-price"><span class="price">1.50</span><span class="unit">تتر</span></div>
+      </div>
+    </article>
+
+    <article class="crypto-card">
+      <div class="price-container">
+        <div class="toman-price"><span class="price">315,794.28</span><span class="unit">تومان</span></div>
+        <div class="tether-price"><span class="price">1.17</span><span class="unit">تتر</span></div>
+      </div>
+    </article>
+
+    <article class="crypto-card">
+      <div class="price-container">
+        <div class="toman-price"><span class="price">2,369,798.85</span><span class="unit">تومان</span></div>
+        <div class="tether-price"><span class="price">8.83</span><span class="unit">تتر</span></div>
+      </div>
+    </article>
+
+    <article class="crypto-card">
+      <div class="price-container">
+        <div class="toman-price"><span class="price">65,826.255</span><span class="unit">تومان</span></div>
+        <div class="tether-price"><span class="price">0.24</span><span class="unit">تتر</span></div>
+      </div>
+    </article>
+
+    <article class="crypto-card">
+      <div class="price-container">
+        <div class="toman-price"><span class="price">90,460.785</span><span class="unit">تومان</span></div>
+        <div class="tether-price"><span class="price">0.33</span><span class="unit">تتر</span></div>
+      </div>
+    </article>
+
+    <article class="crypto-card">
+      <div class="price-container">
+        <div class="toman-price"><span class="price">10,242.92</span><span class="unit">تومان</span></div>
+        <div class="tether-price"><span class="price">0.03</span><span class="unit">تتر</span></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!--
+  Verified absent on the live page, recorded here so a future change that adds
+  one of these would be caught by re-reading this fixture's neighbours:
+    - no ld+json offer/price (the Yoast graph is WebPage/Breadcrumb/WebSite/Org)
+    - no __NEXT_DATA__ or any JSON price blob in a <script>
+    - window.MYCONFIG holds only URLs (panel/API/crispId/ajax), no rate
+    - no second tether price in a footer ticker, FAQ, blog block or widget
+-->
+
+</body></html>

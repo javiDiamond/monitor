@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<title>قیمت امروز تتر (USDT) | قیمت و نمودار لحظه‌ای قیمت تتر</title>
+<meta name="description" content="قیمت تتر در این لحظه برابر با 0 دلار است.">
+</head><body>
+
+<!--
+  Pooleno-shaped fixture. The USDT slot is a real server-rendered zero, and the
+  same template renders live prices for every OTHER asset. That is the trap: a
+  selector that sweeps too wide picks up a neighbouring coin's price instead of
+  the tether slot, and pooleno would be reported as a violation.
+
+  Note also that `#price-usdt-detail-summary strong` alone matches FOUR elements
+  (two hero rows + two prose zeros). The adapter scopes to exactly one.
+-->
+
+<section id="price-usdt-detail-summary">
+  <!--
+    Exactly ONE div[dir="ltr"] wraps both rows (the Toman row and the USDT row).
+    That is what makes the scoped selector resolve to a single element, and it is
+    reproduced here precisely so the test would fail if the selector were loosened.
+  -->
+  <div dir="ltr" class="mt-3 flex flex-col gap-1">
+    <div class="flex min-w-0 items-center gap-2">
+      <strong class="text-heading-xs font-bold text-end text-xl">۰</strong>
+      <span class="w-10">TMN</span>
+    </div>
+    <div class="flex min-w-0 items-center gap-2">
+      <strong class="text-heading-xs font-bold text-end text-xl">$0</strong>
+      <span class="w-10">USDT</span>
+    </div>
+  </div>
+  <p class="mt-2">قیمت تتر (USDT) در ای لحظه <strong>0</strong> دلار و معادل با <strong>0</strong> تومان است.</p>
+</section>
+
+<!--
+  Neighbouring assets on the same page. These ARE live prices, and two of them
+  sit inside the exact tether band. They must never be read as the tether price.
+-->
+<div id="market-trend">
+  <article id="price-usdt-detail-market-trend-usdc-link">
+    <span>یو اس دی سی</span><span class="text-title-lg font-semibold">۲۶۹,۲۰۹</span><span>تومان</span>
+  </article>
+  <article id="price-usdt-detail-market-trend-btc-link">
+    <span>بیت کوین</span><span class="text-title-lg font-semibold">۲۲,۷۷۵,۸۱۷,۲۹۳</span><span>تومان</span>
+  </article>
+  <article id="price-usdt-detail-market-trend-eth-link">
+    <span>اتریوم</span><span class="text-title-lg font-semibold">۷۲۱,۹۶۰,۱۲۷</span><span>تومان</span>
+  </article>
+</div>
+
+<script type="application/ld+json">
+{"@type":"ExchangeRateSpecification","currentExchangeRate":[{"price":0,"priceCurrency":"IRR"}]}
+</script>
+
+</body></html>

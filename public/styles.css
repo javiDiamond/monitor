@@ -1,0 +1,926 @@
+/* Every colour lives here. A second palette could not be a `:root` override
+   until the ~30 hardcoded values below became tokens, so they did.
+   Dark theme: deep blue-slate surfaces with cool hairlines, so adjacent cards
+   separate cleanly. The SEMANTIC colours are preserved — green = compliant,
+   red = violation, amber = in-progress — only their exact hues were nudged. */
+:root {
+  color-scheme: dark;
+
+  --bg: #0a101a;
+  --card: rgba(20, 30, 46, 0.85);
+  --side-bg: rgba(13, 20, 32, 0.96);
+  --surface-1: rgba(148, 170, 205, 0.055);
+  --surface-2: rgba(148, 170, 205, 0.09);
+  --surface-3: rgba(148, 170, 205, 0.13);
+  --hairline: rgba(148, 170, 205, 0.11);
+  --inset: rgba(4, 10, 18, 0.35);
+  --inset-deep: rgba(4, 10, 18, 0.45);
+  --topbar: rgba(10, 16, 26, 0.85);
+  --field: #141d2c;
+
+  --border: rgba(148, 170, 205, 0.15);
+  --border-strong: rgba(148, 170, 205, 0.3);
+  --text: #eaf1fb;
+  --text-dim: #9db0c8;
+  --text-faint: #6f8098;
+  --ok: #2bd981;
+  --ok-soft: rgba(43, 217, 129, 0.14);
+  --bad: #ff5c6e;
+  --bad-soft: rgba(255, 92, 110, 0.14);
+  --warn: #ffb648;
+  --warn-soft: rgba(255, 182, 72, 0.12);
+  --accent: #57a0ff;
+
+  /* Border tints and washes, split from the text colours above so light mode
+     can keep the same hues without dragging unreadable text along. */
+  --ok-line: rgba(43, 217, 129, 0.35);
+  --bad-line: rgba(255, 92, 110, 0.35);
+  --warn-line: rgba(255, 182, 72, 0.3);
+  --bad-wash: rgba(255, 92, 110, 0.06);
+  --warn-wash: rgba(255, 182, 72, 0.05);
+  --wash-a: rgba(87, 160, 255, 0.1);
+  --wash-b: rgba(43, 217, 129, 0.06);
+  --glow-opacity: 0.3;
+  --price-wash-a: rgba(255, 92, 110, 0.14);
+  --price-wash-b: rgba(255, 92, 110, 0.03);
+  --brand-glow: rgba(43, 217, 129, 0.3);
+
+  /* Frames someone else's page, so it stays light in BOTH themes. */
+  --shot-frame: #f4f6f9;
+
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow: 0 8px 28px rgba(2, 8, 18, 0.35);
+  --font: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+  --mono: 'Vazir Code', 'Consolas', 'SF Mono', monospace;
+}
+
+/* Light mode. The dark accents cannot be reused here: on white they measure
+   #26d07c 2.02:1, #ff5d6c 2.99:1 and #ffb545 1.76:1 — all far below the 4.5:1
+   body-text threshold. Each has a darker counterpart instead. Measured against
+   the page background (#f2f5f9), the values actually shipped:
+     --text        #0f172a   16.33:1
+     --text-dim    #475569    6.93:1
+     --text-faint  #5f6f84    4.69:1   (slate-500 #64748b is 4.35:1 here and
+                                        was not close enough; it only clears
+                                        4.5:1 on a white card, not on --bg)
+     --ok          #047857    5.02:1
+     --bad         #be123c    5.75:1
+     --warn        #a16207    4.50:1   (4.92:1 on a card)
+     --accent      #1d4ed8    6.13:1   (a focus ring only needs 3:1) */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #eef2f8;
+  --card: rgba(255, 255, 255, 0.92);
+  --side-bg: rgba(255, 255, 255, 0.96);
+  --surface-1: rgba(15, 23, 42, 0.04);
+  --surface-2: rgba(15, 23, 42, 0.06);
+  --surface-3: rgba(15, 23, 42, 0.08);
+  --hairline: rgba(15, 23, 42, 0.10);
+  --inset: rgba(15, 23, 42, 0.04);
+  --inset-deep: rgba(15, 23, 42, 0.08);
+  --topbar: rgba(255, 255, 255, 0.88);
+  --field: #ffffff;
+
+  --border: rgba(15, 23, 42, 0.14);
+  --border-strong: rgba(15, 23, 42, 0.26);
+  --text: #0f172a;
+  --text-dim: #475569;
+  --text-faint: #5f6f84;
+  --ok: #047857;
+  --ok-soft: rgba(4, 120, 87, 0.10);
+  --bad: #be123c;
+  --bad-soft: rgba(190, 18, 60, 0.09);
+  --warn: #a16207;
+  --warn-soft: rgba(161, 98, 7, 0.10);
+  --accent: #1d4ed8;
+
+  --ok-line: rgba(4, 120, 87, 0.32);
+  --bad-line: rgba(190, 18, 60, 0.30);
+  --warn-line: rgba(161, 98, 7, 0.30);
+  --bad-wash: rgba(190, 18, 60, 0.05);
+  --warn-wash: rgba(161, 98, 7, 0.05);
+  --wash-a: rgba(29, 78, 216, 0.07);
+  --wash-b: rgba(4, 120, 87, 0.05);
+  /* The dark glows are built for a near-black page; at full strength on white
+     they wash it out entirely. */
+  --glow-opacity: 0.14;
+  --price-wash-a: rgba(190, 18, 60, 0.10);
+  --price-wash-b: rgba(190, 18, 60, 0.02);
+
+  --shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+/* `hidden` must mean hidden.
+   The UA sheet's `[hidden] { display: none }` is an author-level-beatable rule:
+   any selector that sets `display` on the same element wins on source order, so
+   `el.hidden = true` silently did nothing on `.ex-flash`, `.ex-price`, `.meta`
+   and `.vis-note` — four boxes rendered visibly empty on the exchange page.
+   `!important` so no later author rule can reinstate a `display`. */
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  /* The decorative glows are fixed and wider than the viewport. `clip` (unlike
+     `hidden`) does not create a scroll container, so the sticky header works. */
+  overflow-x: clip;
+}
+
+body {
+  position: relative;
+  background-image:
+    radial-gradient(900px 500px at 85% -10%, var(--wash-a), transparent 60%),
+    radial-gradient(700px 420px at 5% 0%, var(--wash-b), transparent 60%);
+  background-attachment: fixed;
+}
+
+.glow {
+  position: fixed;
+  width: 620px;
+  height: 620px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0;
+  transition: opacity 900ms ease;
+  pointer-events: none;
+  z-index: 0;
+}
+/* The glows are a solid accent under a blur, faded in by `.on`. Their strength
+   is the one knob light mode needs (the dark values are tuned for near-black),
+   so it is a token rather than a per-theme background alpha. */
+.glow-ok { top: -240px; inset-inline-end: -180px; background: var(--ok); }
+.glow-bad { top: -240px; inset-inline-end: -180px; background: var(--bad); }
+.glow-warn { top: -240px; inset-inline-end: -180px; background: var(--warn); }
+.glow.on { opacity: var(--glow-opacity); }
+
+/* ---------- app shell: sidebar + main column ---------- */
+.shell { display: flex; min-height: 100vh; }
+
+/* The sidebar carries the brand and the page navigation; the sticky column on
+   the inline-start side (right, in this RTL layout). */
+.sidebar {
+  width: 252px; flex-shrink: 0;
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column; gap: 20px;
+  padding: 22px 16px;
+  background: var(--side-bg);
+  border-inline-end: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 30;
+}
+.sidebar .brand { padding: 0 6px; }
+a.brand { text-decoration: none; color: inherit; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-mark {
+  width: 42px; height: 42px; flex: none;
+  display: grid; place-items: center;
+  border-radius: 13px; font-size: 24px; font-weight: 700; color: #04140c;
+  background: linear-gradient(140deg, #35e893, #17b26a);
+  box-shadow: 0 6px 18px var(--brand-glow);
+}
+.brand-text h1 { margin: 0; font-size: 15.5px; font-weight: 700; letter-spacing: -0.2px; line-height: 1.7; }
+.sidebar .brand-text p { margin: 4px 0 0; font-size: 11.5px; line-height: 1.8; color: var(--text-dim); }
+
+.side-nav { display: flex; flex-direction: column; gap: 4px; }
+.side-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px; border-radius: var(--radius-sm);
+  color: var(--text-dim); text-decoration: none;
+  font-size: 13.5px; font-weight: 600;
+  border: 1px solid transparent;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+.side-link svg { flex: none; opacity: .8; }
+.side-link:hover { color: var(--text); background: var(--surface-1); }
+.side-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.side-link.active {
+  color: var(--text);
+  background: var(--surface-3);
+  border-color: var(--border);
+}
+.side-link.active svg { opacity: 1; color: var(--accent); }
+
+.side-foot {
+  margin-top: auto; padding-top: 16px;
+  display: flex; flex-direction: column; gap: 10px;
+  border-top: 1px solid var(--hairline);
+}
+.side-foot .policy-chip { white-space: normal; line-height: 1.8; }
+.side-foot .btn { justify-content: center; }
+
+/* Mobile: the sidebar leaves the canvas; the menu button in the topbar calls
+   it back over a dimmed backdrop. */
+.side-backdrop {
+  position: fixed; inset: 0; z-index: 25;
+  background: rgba(3, 7, 12, 0.55);
+  backdrop-filter: blur(2px);
+}
+.menu-btn { display: none; }
+
+.main-col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+/* ---------- topbar (page actions only, now that nav lives in the sidebar) ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  padding: 12px 26px;
+  background: var(--topbar);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.topbar-title { font-size: 15px; font-weight: 700; letter-spacing: -0.2px; }
+
+.menu-btn {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 38px; height: 38px; flex: none;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong); background: var(--surface-2);
+  color: var(--text); cursor: pointer;
+}
+.menu-btn:hover { background: var(--surface-3); }
+
+.topbar-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+.policy-chip {
+  padding: 8px 14px; border-radius: 999px; font-size: 12.5px;
+  color: var(--text-dim); border: 1px dashed var(--border-strong);
+  background: var(--surface-1); white-space: nowrap;
+}
+.policy-chip span { color: var(--text); font-weight: 600; }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 500;
+  border: 1px solid var(--border-strong); background: var(--surface-2);
+  color: var(--text-dim); white-space: nowrap;
+}
+.pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-faint); }
+.pill[data-state='ok'] { color: var(--ok); border-color: var(--ok-line); background: var(--ok-soft); }
+.pill[data-state='ok'] .dot { background: var(--ok); animation: pulse 2s infinite; }
+.pill[data-state='bad'] { color: var(--bad); border-color: var(--bad-line); background: var(--bad-soft); }
+.pill[data-state='bad'] .dot { background: var(--bad); animation: pulse 1.4s infinite; }
+.pill[data-state='unknown'] { color: var(--warn); border-color: var(--warn-line); background: var(--warn-soft); }
+.pill[data-state='unknown'] .dot { background: var(--warn); animation: pulse 1.8s infinite; }
+.pill[data-state='loading'] .dot { background: var(--warn); animation: pulse 1s infinite; }
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+  70% { box-shadow: 0 0 0 8px transparent; opacity: .85; }
+  100% { box-shadow: 0 0 0 0 transparent; opacity: 1; }
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 18px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong); background: var(--surface-2);
+  color: var(--text); font-family: inherit; font-size: 13.5px; font-weight: 600;
+  cursor: pointer; transition: background 180ms ease, transform 120ms ease;
+}
+.btn:hover { background: var(--surface-3); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.btn-spinner {
+  display: none; width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid var(--border-strong); border-top-color: var(--text);
+  animation: spin .7s linear infinite;
+}
+.btn.loading .btn-spinner { display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- layout ---------- */
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 1180px; margin: 0 auto;
+  padding: 26px 28px 60px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ---------- hero ---------- */
+.hero { padding: 26px 28px; position: relative; overflow: hidden; }
+.hero::before {
+  content: ''; position: absolute; inset-inline-start: 0; top: 0; bottom: 0;
+  width: 5px; background: var(--text-faint); transition: background 400ms ease;
+}
+.hero[data-state='ok']::before { background: var(--ok); }
+.hero[data-state='bad']::before { background: var(--bad); }
+.hero[data-state='unknown']::before,
+.hero[data-state='loading']::before { background: var(--warn); }
+
+.hero-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.hero-head h2 { margin: 0 0 8px; font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+.hero-desc { margin: 0; font-size: 14px; line-height: 2; color: var(--text-dim); max-width: 68ch; }
+
+.hero-badge {
+  flex: none; padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  border: 1px solid var(--border-strong); background: var(--surface-2);
+  color: var(--text-dim); white-space: nowrap;
+}
+.hero[data-state='ok'] .hero-badge { color: var(--ok); border-color: var(--ok-line); background: var(--ok-soft); }
+.hero[data-state='bad'] .hero-badge { color: var(--bad); border-color: var(--bad-line); background: var(--bad-soft); }
+.hero[data-state='unknown'] .hero-badge { color: var(--warn); border-color: var(--warn-line); background: var(--warn-soft); }
+
+/* ---------- environment banner ---------- */
+/* Shown when this host cannot run a browser at all. Every browser-backed exchange
+   is then «نامشخص» for a reason that has nothing to do with the exchanges, and the
+   per-card badges say nothing about which machine is at fault. */
+.banner {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bad-soft);
+  color: var(--text);
+  font-size: 13.5px;
+  line-height: 1.85;
+}
+.banner-title { display: block; font-weight: 700; color: var(--bad); margin-bottom: 4px; }
+.banner-hint { display: block; margin-top: 6px; color: var(--text-dim); }
+.banner code {
+  font-family: var(--mono);
+  direction: ltr;
+  display: inline-block;
+  margin-inline-start: 6px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--inset-deep);
+  color: var(--text);
+  font-size: 12.5px;
+  user-select: all;
+}
+
+.hero-foot { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
+.meta-row { display: flex; flex-wrap: wrap; gap: 28px; }
+.meta { display: flex; flex-direction: column; gap: 4px; }
+.meta-k { font-size: 11.5px; color: var(--text-faint); }
+.meta-v { font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ---------- stats ---------- */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.stat { padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; }
+.stat-label { font-size: 12.5px; color: var(--text-dim); }
+.stat-value { font-size: 27px; font-weight: 800; letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
+.stat-hint { font-size: 11.5px; color: var(--text-faint); line-height: 1.7; }
+.stat-value.ok { color: var(--ok); }
+.stat-value.bad { color: var(--bad); }
+.stat-value.warn { color: var(--warn); }
+
+/* ---------- exchange cards ---------- */
+.ex-grid {
+  display: grid;
+  /* auto-fit (not auto-fill) so two exchanges fill the row instead of
+     leaving an empty third track. The roomy gap is deliberate: adjacent cards
+     must read as separate instruments, not one wall of numbers. */
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 18px;
+}
+
+/* The card is an <a>, so it stays keyboard-accessible as a single control.
+   Hover deepens the border and shadow WITHOUT moving the element: a transform
+   would leave the card shifting under the pointer and break click
+   actionability for automation. */
+a.ex-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+}
+a.ex-card:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-1);
+  box-shadow: 0 14px 34px rgba(2, 8, 18, 0.4);
+}
+a.ex-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.ex-card {
+  padding: 18px 20px; position: relative; overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 3px 14px rgba(2, 8, 18, 0.28);
+  /* Column flex so .ex-card-foot can sit flush to the bottom of each card. */
+  display: flex; flex-direction: column;
+}
+.ex-card::before {
+  content: ''; position: absolute; inset-inline-start: 0; top: 0; bottom: 0;
+  width: 4px; background: var(--text-faint);
+}
+.ex-card[data-state='ok']::before { background: var(--ok); }
+.ex-card[data-state='bad']::before { background: var(--bad); }
+.ex-card[data-state='unknown']::before { background: var(--warn); }
+/* A whisper of the state in the card's own wash, so a group of cards sorts
+   visually before a single label is read. */
+.ex-card[data-state='ok'] { background: linear-gradient(to left, var(--ok-soft), var(--card) 26%); }
+.ex-card[data-state='bad'] { background: linear-gradient(to left, var(--bad-soft), var(--card) 26%); }
+.ex-card[data-state='unknown'] { background: linear-gradient(to left, var(--warn-soft), var(--card) 26%); }
+
+.ex-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+  padding-bottom: 12px; margin-bottom: 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+.ex-id { display: flex; align-items: baseline; gap: 10px; }
+.ex-id h3 { margin: 0; font-size: 16.5px; font-weight: 700; }
+.ex-host { font-size: 11.5px; color: var(--text-faint); font-family: var(--mono); direction: ltr; }
+.ex-title { font-size: 15px; font-weight: 600; margin: 0 0 6px; }
+.ex-desc { margin: 0 0 14px; font-size: 13.5px; line-height: 1.95; color: var(--text-dim); }
+
+/* compact card footer (overview page) */
+.ex-card-foot {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border);
+}
+.ex-card-price { font-size: 14px; font-weight: 700; }
+.ex-card-price.bad { color: var(--bad); }
+.ex-card-price.hidden { color: var(--ok); }
+.ex-more {
+  margin-inline-start: auto; font-size: 12.5px; font-weight: 600;
+  color: var(--text-dim); white-space: nowrap;
+}
+a.ex-card:hover .ex-more { color: var(--text); }
+
+/* small amber tag for the load-flash notice */
+.flash-tag {
+  font-size: 11px; padding: 4px 10px; border-radius: 999px;
+  color: var(--warn); background: var(--warn-soft);
+  border: 1px solid var(--warn-line); white-space: nowrap;
+}
+
+/* breadcrumb back link */
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+  font-size: 13px; color: var(--text-dim); text-decoration: none;
+  padding: 7px 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface-1);
+}
+.back-link:hover { color: var(--text); border-color: var(--border-strong); }
+
+/* 404 */
+.notfound { text-align: center; padding: 60px 24px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.notfound h1 { margin: 0; font-size: 22px; }
+.notfound p { margin: 0; color: var(--text-dim); font-size: 14px; }
+.notfound .btn { text-decoration: none; margin-top: 8px; }
+
+/* flash note: the price was visible while the page was still rendering */
+.ex-flash {
+  display: flex; gap: 10px; align-items: flex-start;
+  margin-bottom: 14px; padding: 11px 14px;
+  font-size: 12.5px; line-height: 1.9;
+  color: var(--warn);
+  background: var(--warn-soft);
+  border: 1px solid var(--warn-line);
+  border-radius: var(--radius-sm);
+}
+.ex-flash b { font-weight: 700; white-space: nowrap; }
+
+.ex-price {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px;
+  margin-bottom: 16px; padding: 18px 22px; border-radius: var(--radius-sm);
+  background: linear-gradient(120deg, var(--price-wash-a), var(--price-wash-b));
+  border: 1px solid var(--bad-line); width: fit-content; min-width: 280px;
+}
+.ex-price-label { flex-basis: 100%; font-size: 12px; color: var(--bad); font-weight: 600; }
+.ex-price-value { font-size: 34px; font-weight: 800; color: var(--bad); letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+.ex-price-unit { font-size: 14px; color: var(--text-dim); }
+
+.ex-probes { display: flex; flex-direction: column; gap: 0; margin-bottom: 4px; }
+.ex-probe {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 10px 2px; border-bottom: 1px dashed var(--hairline);
+}
+.ex-probe:last-child { border-bottom: 0; }
+.ex-probe-k { font-size: 13px; color: var(--text-dim); }
+.ex-probe-v { font-size: 13.5px; font-weight: 600; text-align: left; word-break: break-word; }
+.ex-probe-v.ok { color: var(--bad); }
+.ex-probe-v.hidden { color: var(--ok); }
+.ex-probe-v.dim { color: var(--text-faint); }
+.mono { font-family: var(--mono); direction: ltr; unicode-bidi: plaintext; }
+
+.ex-api { margin-top: 10px; }
+/* The browser-tab title finding. `border-top` marks it as belonging to no page
+   surface at all, which is exactly what it is. */
+.ex-title { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
+.ex-api .ex-probe-v.warn { color: var(--warn); }
+.vis-note {
+  display: block; font-family: var(--font); font-size: 10.5px;
+  color: var(--warn); opacity: .9; margin-top: 2px; direction: rtl;
+}
+
+/* The technical detail of a check — shown only when it carries information
+   nothing else on the page does (an install hint, a raw nav error). */
+.note {
+  margin: 16px 0 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--inset);
+}
+.note-title {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11.5px; font-weight: 600;
+  color: var(--text-faint);
+}
+.note-body { font-size: 13px; line-height: 1.8; color: var(--text-dim); }
+/* A detail that is one technical string (a shell hint, an error): kept
+   selectable and readable LTR inside the RTL page. */
+.note-body .note-code {
+  display: block;
+  font-family: var(--mono); font-size: 12.5px; line-height: 1.85;
+  direction: ltr; text-align: left;
+  color: var(--text);
+  white-space: pre-wrap; word-break: break-word;
+  user-select: all;
+}
+
+.ex-shots { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+.shot { background: var(--shot-frame); border: 1px solid var(--border-strong); border-radius: 10px; padding: 6px; overflow: hidden; }
+.shot img { display: block; width: 100%; height: auto; border-radius: 6px; }
+.shot-label { display: block; font-size: 11px; color: var(--text-dim); margin-bottom: 7px; }
+.shot-time { display: block; margin-top: 4px; font-size: 10.5px; color: var(--text-faint); text-align: center; }
+
+/* Link from the shot panel to the per-exchange evidence archive. */
+.shots-archive {
+  display: inline-block; margin-top: 14px;
+  font-size: 12.5px; font-weight: 600; color: var(--accent);
+  text-decoration: none;
+}
+.shots-archive:hover { text-decoration: underline; }
+
+/* Progress bar in the detail hero while this exchange's check runs. */
+.hero-progress { margin-top: 14px; }
+
+/* ---------- screenshots gallery ---------- */
+.gallery-tools {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.gallery-tools .field { margin-inline-start: auto; }
+
+.shots-gallery {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 14px; align-items: start;
+}
+.shot-card { padding: 12px 14px; overflow: hidden; }
+.shot-card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap; margin-bottom: 10px;
+}
+.shot-when { font-size: 12.5px; font-weight: 600; }
+.shot-ago { font-weight: 400; color: var(--text-faint); font-size: 11.5px; }
+
+/* The preview shows the top (price-hero) region of the capture; the whole
+ * page is one click away, in the card or in the lightbox. */
+.shot-preview {
+  display: block; width: 100%; padding: 0; cursor: zoom-in;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+  background: var(--shot-frame); height: 210px;
+}
+.shot-card.expanded .shot-preview { height: auto; cursor: zoom-in; }
+.shot-preview img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: top;
+}
+.shot-card.expanded .shot-preview img { height: auto; object-fit: contain; }
+.shot-preview:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.shot-card-foot {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
+}
+.shot-expand {
+  font: inherit; font-size: 11.5px; cursor: pointer;
+  color: var(--text-dim); background: none;
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 4px 10px;
+  margin-inline-start: auto;
+}
+.shot-expand:hover { color: var(--text); border-color: var(--border-strong); }
+
+/* Full-size viewer for one evaluation, walked with the arrow keys. */
+.lightbox {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(6, 9, 14, 0.92);
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 16px 20px;
+  overflow: auto;
+}
+.lightbox[hidden] { display: none; }
+.lightbox-bar {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  color: var(--text);
+}
+.lightbox-state {
+  font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 999px;
+  border: 1px solid var(--border-strong); background: var(--surface-2);
+}
+.lightbox-when { font-size: 13px; color: var(--text-dim); }
+.lightbox-pos { font-size: 12px; color: var(--text-faint); margin-inline-start: auto; }
+.lightbox img {
+  display: block; margin: 0 auto; max-width: 100%;
+  border-radius: 8px; background: var(--shot-frame);
+}
+body.no-scroll { overflow: hidden; }
+
+/* ---------- panels ---------- */
+.panel { padding: 22px 24px; }
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.panel-head h3 { margin: 0; font-size: 15.5px; font-weight: 700; }
+
+.tag {
+  font-size: 11.5px; padding: 5px 11px; border-radius: 999px;
+  background: var(--surface-3); border: 1px solid var(--border);
+  color: var(--text-dim); white-space: nowrap;
+}
+.tag.warn { color: var(--warn); border-color: var(--warn-line); background: var(--warn-soft); }
+
+/* ---------- progress bars ---------- */
+/* One shape everywhere: the cycle panel, a checking card, the detail hero.
+   The width is set by tickProgressBars from data attributes; this only styles
+   the track and the moving fill. Amber is the "in progress" colour this UI
+   already uses (loading pill, unknown stripe); verdicts get state colours. */
+.progress {
+  height: 8px; width: 100%;
+  border-radius: 999px;
+  background: var(--inset-deep);
+  border: 1px solid var(--border-strong);
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%; width: 4%;
+  border-radius: 999px;
+  background: var(--warn);
+  transition: width 900ms ease;
+}
+.progress-label {
+  display: block; margin-top: 6px;
+  font-size: 11px; color: var(--text-faint);
+}
+
+/* ---------- dashboard: cycle panel, filters, verdict strips ---------- */
+.cycle { margin-bottom: 16px; }
+.cycle-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 8px;
+}
+.cycle-title { font-size: 13px; font-weight: 600; color: var(--text); }
+.cycle-title.cycle-done { color: var(--ok); }
+.cycle-current { font-size: 12.5px; color: var(--text-dim); }
+.cycle-current a { color: var(--text); font-weight: 600; text-decoration: none; }
+.cycle-current a:hover { text-decoration: underline; }
+.cycle-progress { height: 10px; }
+
+.filter-bar {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin-top: -4px;
+}
+.chips { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.chip {
+  font-family: inherit; font-size: 12.5px; font-weight: 600;
+  padding: 7px 14px; border-radius: 999px; cursor: pointer;
+  color: var(--text-dim); background: var(--surface-1);
+  border: 1px solid var(--border);
+  transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+.chip:hover { color: var(--text); border-color: var(--border-strong); }
+.chip.active {
+  color: var(--text); background: var(--surface-3);
+  border-color: var(--border-strong);
+}
+.chip-n {
+  font-size: 11px; color: var(--text-faint);
+  background: var(--inset); border-radius: 999px; padding: 1px 7px;
+}
+.chip.active .chip-n { color: var(--text); }
+.search-box {
+  font-family: inherit; font-size: 13px; color: var(--text);
+  background: var(--field); border: 1px solid var(--border);
+  border-radius: 999px; padding: 8px 16px; min-width: 220px;
+  margin-inline-start: auto;
+}
+.search-box:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.empty-filter {
+  padding: 26px; text-align: center; color: var(--text-faint); font-size: 13.5px;
+}
+
+/* Verdict history on a card: one small cell per recent check, newest at the
+   inline-start (right, in this RTL page) edge. */
+.state-strip {
+  display: flex; gap: 3px; margin: 2px 0 10px;
+}
+.strip-cell {
+  width: 14px; height: 5px; border-radius: 2px;
+  background: var(--text-faint); opacity: .85;
+}
+.strip-cell.ok { background: var(--ok); }
+.strip-cell.bad { background: var(--bad); }
+.strip-cell.warn { background: var(--warn); }
+
+/* A card waiting for this cycle to reach it: visibly queued, not forgotten. */
+.ex-card.queued { opacity: .55; }
+.queue-tag {
+  display: inline-block; margin: 2px 0 10px;
+  font-size: 10.5px; padding: 3px 10px; border-radius: 999px;
+  color: var(--text-faint); background: var(--surface-1);
+  border: 1px dashed var(--border);
+}
+
+.ex-card-progress { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border); }
+
+/* Refresh scope: which exchange the «بررسی مجدد» button targets. */
+.scope-select {
+  font-family: inherit; font-size: 12.5px; color: var(--text);
+  background: var(--field); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm); padding: 8px 12px; cursor: pointer;
+  max-width: 170px;
+}
+.settings-hint {
+  margin: 4px 0 0; font-size: 11.5px; line-height: 1.9; color: var(--text-faint);
+}
+
+/* Prev/next within the watchlist, next to the back link on a detail page. */
+.ex-neighbours {
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+.neighbour {
+  font-size: 12.5px; font-weight: 600; color: var(--text-dim); text-decoration: none;
+  padding: 7px 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface-1);
+}
+.neighbour:hover { color: var(--text); border-color: var(--border-strong); }
+
+.settings-body { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.field { display: flex; align-items: center; gap: 10px; }
+.field-label { font-size: 13px; color: var(--text-dim); }
+select {
+  font-family: inherit; font-size: 13.5px; color: var(--text);
+  background: var(--field); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm); padding: 9px 14px; cursor: pointer;
+}
+select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* ---------- log table ---------- */
+.table-scroll { overflow-x: auto; }
+.log { width: 100%; border-collapse: collapse; font-size: 13px; }
+.log th {
+  text-align: right; font-weight: 600; color: var(--text-dim);
+  padding: 0 12px 12px; border-bottom: 1px solid var(--border);
+  font-size: 12px; white-space: nowrap;
+}
+.log td { padding: 11px 12px; border-bottom: 1px solid var(--hairline); vertical-align: middle; }
+.log tbody tr:last-child td { border-bottom: 0; }
+.log tbody tr:hover { background: var(--surface-1); }
+.log .num { font-variant-numeric: tabular-nums; }
+.log .empty td { text-align: center; color: var(--text-faint); padding: 26px 0; }
+.log .flash { color: var(--warn); font-size: 11.5px; }
+
+.badge { display: inline-block; padding: 4px 11px; border-radius: 999px; font-size: 11.5px; font-weight: 600; white-space: nowrap; }
+.badge.ok { color: var(--ok); background: var(--ok-soft); border: 1px solid var(--ok-line); }
+.badge.bad { color: var(--bad); background: var(--bad-soft); border: 1px solid var(--bad-line); }
+.badge.warn { color: var(--warn); background: var(--warn-soft); border: 1px solid var(--warn-line); }
+
+.foot { text-align: center; font-size: 12px; color: var(--text-faint); padding-top: 6px; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 940px) {
+  /* The sidebar leaves the canvas and the topbar grows a menu button. */
+  .sidebar {
+    position: fixed; inset-block: 0; inset-inline-start: 0;
+    transform: translateX(105%); /* RTL: off the right edge */
+    transition: transform 240ms ease;
+    box-shadow: none;
+  }
+  .sidebar.open {
+    transform: none;
+    box-shadow: 0 0 60px rgba(2, 8, 18, 0.55);
+  }
+  .menu-btn { display: inline-flex; }
+  .topbar { padding: 10px 16px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .ex-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .wrap { padding: 16px 14px 44px; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .hero { padding: 20px; }
+  .hero-head { flex-direction: column; gap: 12px; }
+  .ex-card { padding: 16px 16px 14px; }
+  .meta-row { gap: 16px; }
+  .topbar-actions { width: 100%; justify-content: space-between; }
+  .ex-price-value { font-size: 28px; }
+}
+
+
+/* ---------- log page ---------- */
+.filters {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  margin: 4px 0 18px;
+}
+.log-link {
+  color: var(--text-dim); text-decoration: none;
+}
+.log-link:hover { color: var(--text); }
+.log-msg { line-height: 1.9; }
+.log-http, .log-dur {
+  font-family: var(--mono); font-size: 11px; color: var(--text-faint);
+  white-space: nowrap;
+}
+
+/* Clear/copy live in their own group so they sit apart from the filters they act on. */
+.log-actions {
+  display: flex; align-items: center; gap: 10px;
+  margin-inline-start: auto;
+}
+.btn-quiet { font-size: 12px; padding: 7px 12px; color: var(--text-dim); }
+.btn-quiet:hover { color: var(--text); }
+.btn-danger { font-size: 12px; padding: 7px 12px; color: var(--bad); }
+.btn-danger:hover { background: var(--bad-soft); }
+.btn-armed {
+  color: var(--text); background: var(--bad); border-color: var(--bad);
+}
+
+.col-detail { width: 96px; }
+.log-toggle {
+  font: inherit; font-size: 11.5px;
+  color: var(--text-dim); background: none;
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 3px 9px; cursor: pointer;
+}
+.log-toggle:hover { color: var(--text); border-color: var(--border-strong); }
+
+.log-detail > td { padding: 0 12px 14px; }
+.log-detail pre {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-inline-start: 2px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--inset);
+  color: var(--text-dim);
+  font-family: var(--mono); font-size: 11.5px; line-height: 1.85;
+  /* LTR so net::ERR_* codes, URLs and key names read correctly in an RTL page. */
+  direction: ltr; text-align: left;
+  white-space: pre-wrap; word-break: break-word;
+  max-height: 340px; overflow: auto;
+}
+
+.log-note {
+  margin: 14px 0 0;
+  font-size: 11.5px; line-height: 1.9; color: var(--text-faint);
+}
+tr.log-error td { background: var(--bad-wash); }
+tr.log-warn td { background: var(--warn-wash); }
+tr.log-row td { vertical-align: top; }
+
+/* ---------- logs: reason labels and new-entry highlight ---------- */
+.log-code {
+  font-size: 12px; color: var(--text-dim);
+  cursor: help;
+}
+tr.log-new td { animation: rowNew 2.4s ease-out; }
+@keyframes rowNew {
+  from { background: var(--warn-soft); }
+  to { background: transparent; }
+}
+tr.log-new.log-error td { animation: rowNewError 2.4s ease-out; }
+@keyframes rowNewError {
+  from { background: var(--bad-soft); }
+  to { background: transparent; }
+}
+
+/* ---------- accessibility: calm the page for reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .pill .dot, .btn-spinner { animation: none !important; }
+  .glow { transition: none !important; }
+  .progress-bar { transition: none !important; }
+  tr.log-new td, tr.log-new.log-error td { animation: none !important; }
+  .ex-card, a.ex-card, .chip, .btn { transition: none !important; }
+}
+
+/* ---------- mobile: the topbar must not eat the whole screen ---------- */
+@media (max-width: 760px) {
+  .brand-mark { width: 36px; height: 36px; }
+  .brand-text h1 { font-size: 14px; }
+  .sidebar .brand-text p { font-size: 10.5px; }
+  .policy-chip, .btn, .scope-select { font-size: 11.5px; padding: 6px 10px; }
+  .chip { font-size: 11px; padding: 5px 10px; }
+  .search-box { min-width: 0; flex: 1 1 100%; }
+  .stats-grid { gap: 10px; }
+  .stat { padding: 14px 16px; }
+  .stat-value { font-size: 22px; }
+}

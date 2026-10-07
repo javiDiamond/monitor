@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fa-IR" dir="rtl" data-theme="dark"><head><meta charset="utf-8">
+<title>صرافی اتراکس</title>
+</head><body>
+
+<!--
+  Eterex BACKUP page shape: app.eterex.com/market, read only when the public
+  price page fails to load. This is a client-rendered SPA — its served HTML is an
+  empty `#app` shell and these rows exist only after JavaScript runs, which is
+  why the scraper drives a real browser for it.
+
+  Each market row is a role="button" grid of FIVE direct <span>s:
+      1  coin identity (icon + symbol + Persian name)  — never numeric
+      2  `$` price                                     — excluded by the `$`
+      3  IRT / تومان price                             — THIS is the reading
+      4  change badge                                  — excluded by the `%`
+      5  button cluster                                — never numeric
+
+  THE POINT OF THIS FIXTURE is the third cell. USDT reads `0` here — not a
+  published price, so compliant. The trap the trust gate exists to catch is the
+  OTHER variant of this file, where EVERY row is zeroed because the site's own
+  price feed is dead (`api.eterex.com` answers 404 on every path). A grid of
+  zeros must then read as «نامشخص», never as compliance.
+-->
+
+<!-- ===== CASE A: feed is ALIVE. BTC and ETH carry real تومان rates. ===== -->
+<div class="market-grid" id="alive">
+
+  <!-- The row we monitor: USDT, zeroed while the market is closed. -->
+  <div class="grid items-center gap-3 px-0.5 py-3.5 cursor-pointer" style="grid-template-columns: minmax(0px,2.2fr) minmax(0px,1.1fr) minmax(0px,1.35fr) minmax(0px,1.1fr) minmax(0px,0.9fr)" role="button" tabindex="0">
+    <span class="flex min-w-0 items-center gap-[11px]">
+      <span class="inline-flex items-center justify-center overflow-hidden shrink-0 bg-surface-2" style="width:30px;height:30px;border-radius:50%;"><img src="https://static-dl.eterex.com/icons-v2/svg/usdt_.svg" alt="USDT" class="w-full h-full object-cover block"></span>
+      <span class="flex min-w-0 flex-col gap-[3px]">
+        <span class="ltr text-[15px] font-bold text-text" style="text-align:right;">USDT</span>
+        <span class="flex min-w-0 text-[13px] font-medium text-text-faint" dir="rtl" title="تتر · Tether"><span class="truncate shrink-0 max-w-full">تتر</span><span class="flex min-w-0 overflow-hidden"><span class="shrink-0 whitespace-pre"> · </span><span class="truncate" dir="ltr">Tether</span></span></span>
+      </span>
+    </span>
+    <!-- DECOY: the dollar column. The probe must never read this. -->
+    <span class="ltr text-center text-[15px] font-bold tabular-nums text-text">$1</span>
+    <!-- THE READING: the تومان cell. Zero => not published => compliant. -->
+    <span class="ltr text-center text-[15px] font-bold tabular-nums text-text-2">0</span>
+    <!-- DECOY: the change badge, in a different colour from the price cell. -->
+    <span class="flex justify-center"><span class="ltr inline-block whitespace-nowrap rounded-[10px] px-3 py-[5px] text-[14px] font-bold bg-sell-soft text-sell">0%</span></span>
+    <span class="flex items-center justify-end gap-2.5">
+      <button type="button" aria-label="نمودار"><svg viewBox="0 0 24 24" width="15px" height="15px"></svg></button>
+      <button type="button" aria-label="خرید و فروش"><svg viewBox="0 0 24 24" width="15px" height="15px"></svg></button>
+      <button type="button" aria-label="افزودن به علاقه‌مندی‌ها"><svg viewBox="0 0 24 24" width="15px" height="15px"></svg></button>
+    </span>
+  </div>
+
+  <!-- Sibling rows with LIVE rates. These are what prove the feed is real. -->
+  <div class="grid items-center gap-3 px-0.5 py-3.5 cursor-pointer" style="grid-template-columns: minmax(0px,2.2fr) minmax(0px,1.1fr) minmax(0px,1.35fr) minmax(0px,1.1fr) minmax(0px,0.9fr)" role="button" tabindex="0">
+    <span class="flex min-w-0 items-center gap-[11px]">
+      <span class="inline-flex items-center justify-center shrink-0 bg-surface-2" style="width:30px;height:30px;border-radius:50%;"><img src="x" alt="BTC" class="w-full h-full object-cover block"></span>
+      <span class="flex min-w-0 flex-col gap-[3px]">
+        <span class="ltr text-[15px] font-bold">BTC</span>
+        <span dir="rtl" title="بیت کوین · Bitcoin">بیت کوین</span>
+      </span>
+    </span>
+    <span class="ltr text-center text-[15px] font-bold tabular-nums text-text">$67,240</span>
+    <span class="ltr text-center text-[15px] font-bold tabular-nums text-text-2">18,024,500</span>
+    <span class="flex justify-center"><span class="ltr inline-block px-3 py-[5px] text-[14px] font-bold">+1.24%</span></span>
+    <span class="flex items-center justify-end gap-2.5"></span>
+  </div>
+
+  <div class="grid items-center gap-3 px-0.5 py-3.5 cursor-pointer" style="grid-template-columns: minmax(0px,2.2fr) minmax(0px,1.1fr) minmax(0px,1.35fr) minmax(0px,1.1fr) minmax(0px,0.9fr)" role="button" tabindex="0">
+    <span class="flex min-w-0 items-center gap-[11px]">
+      <span class="inline-flex items-center justify-center shrink-0 bg-surface-2" style="width:30px;height:30px;border-radius:50%;"><img src="x" alt="ETH" class="w-full h-full object-cover block"></span>
+      <span class="flex min-w-0 flex-col gap-[3px]">
+        <span class="ltr text-[15px] font-bold">ETH</span>
+        <span dir="rtl" title="اتریوم · Ethereum">اتریوم</span>
+      </span>
+    </span>
+    <span class="ltr text-center text-[15px] font-bold tabular-nums text-text">$1,986</span>
+    <span class="ltr text-center text-[15px] font-bold tabular-nums text-text-2">533,118</span>
+    <span class="flex justify-center"><span class="ltr inline-block px-3 py-[5px] text-[14px] font-bold">-0.88%</span></span>
+    <span class="flex items-center justify-end gap-2.5"></span>
+  </div>
+
+</div>
+
+</body></html>

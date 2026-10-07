@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<title>بیت‌پین | خرید و فروش ارز دیجیتال</title>
+</head><body>
+
+<!--
+  bitpin-shaped fixture. The ticker markup below is the paste that started this
+  investigation, reproduced verbatim: the price slot is EMPTY and the change
+  reads ۰. That is the page complying with the order — and the old probe read
+  the parenthesised change as the price, reporting "۰" as the tether price.
+
+  The market table row is present here, so the page is ready and compliant. The
+  tests derive the other variants (populated price, dash price, signed change) by
+  substituting into this file.
+-->
+
+<!-- The market table. The USDT row is what establishes readiness. -->
+<table class="market-table">
+  <tbody>
+    <tr><td>BTC / IRT</td><td>۲٬۹۹۴٬۰۰۰٬۰۰۰</td><td>+۱.۲٪</td></tr>
+    <tr><td>USDT / IRT</td><td>-</td><td>۰٪</td></tr>
+    <tr><td>ETH / IRT</td><td>۹۱٬۴۰۰٬۰۰۰</td><td>-۰.۸٪</td></tr>
+  </tbody>
+</table>
+
+<!--
+  The bottom ticker. `basis-80` on the <a> is how the adapter picks the tether
+  entry out of the strip. Slot order: coin label, price, change — and the change
+  always WRAPS a nested span holding the percentage, which is how it is told apart
+  from a price rather than by its shape.
+-->
+<div class="fixed bottom-0 w-full overflow-x-auto">
+  <div class="flex items-center gap-2">
+    <a href="/coin/BTC/" class="flex shrink-0 basis-96 items-center justify-center gap-3">
+      <img alt="BTC" src="/btc.png" width="20" height="20">
+      <span>بیت کوین</span>
+      <span>۲٬۹۹۴٬۰۰۰٬۰۰۰</span>
+      <span>(<span class="text-green" dir="ltr">+۱.۲</span>)</span>
+    </a>
+    <a href="/coin/USDT/" class="flex shrink-0 basis-80 items-center justify-center gap-3">
+      <img alt="USDT" src="/usdt.png" width="20" height="20">
+      <span>تتر</span>
+      <span><!--price--></span>
+      <span>(<span class="text-green" dir="ltr">۰</span>)</span>
+    </a>
+  </div>
+</div>
+
+</body></html>

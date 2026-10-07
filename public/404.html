@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>صفحه یافت نشد — پایش قیمت تتر</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<button class="menu-btn" id="menuBtn" type="button" aria-label="باز کردن منو" aria-expanded="false" aria-controls="sidebar">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+    <path d="M4 6h16M4 12h16M4 18h16"/>
+  </svg>
+</button>
+<div class="side-backdrop" id="sideBackdrop" hidden></div>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar" aria-label="منوی پایش">
+    <a class="brand" href="/">
+      <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48" width="30" height="30" aria-hidden="true" focusable="false">
+  <path d="M3.2 24C10.1 13.2 16.9 8.2 24 8.2S37.9 13.2 44.8 24C37.9 34.8 31.1 39.8 24 39.8S10.1 34.8 3.2 24Z"
+        fill="none" stroke="#04231a" stroke-width="3.6" stroke-linejoin="round"/>
+  <circle cx="24" cy="24" r="10.6" fill="#04231a"/>
+  <path d="M17.2 19.6h13.6M21.2 19.6v8.8M26.8 19.6v8.8"
+        fill="none" stroke="#35e893" stroke-width="2.7" stroke-linecap="round"/>
+  <path d="M17.2 19.6c2.2 2.3 4.5 3.4 6.8 3.4s4.6-1.1 6.8-3.4"
+        fill="none" stroke="#35e893" stroke-width="2.4" stroke-linecap="round"/>
+</svg></div>
+      <div class="brand-text">
+        <h1>پایش دستور حذف قیمت تتر</h1>
+        <p>بررسی خودکار رعایت دستور حذف قیمت USDT در صرافی‌های تحت نظارت</p>
+      </div>
+    </a>
+    <nav class="side-nav" aria-label="ناوبری اصلی">
+      <a class="side-link active" href="/" aria-current="page">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+        </svg>
+        داشبورد
+      </a>
+      <a class="side-link" href="/screenshots">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m21 15-4.2-4.2a1.5 1.5 0 0 0-2.1 0L7 18.5"/>
+        </svg>
+        شواهد تصویری
+      </a>
+      <a class="side-link" href="/logs">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 6h16M4 12h12M4 18h16"/>
+        </svg>
+        گزارش رخدادها
+      </a>
+    </nav>
+  </aside>
+
+  <div class="main-col">
+    <header class="topbar">
+      <span class="topbar-title">صفحه یافت نشد</span>
+    </header>
+    <main class="wrap">
+      <section class="card panel notfound">
+        <h1>این صفحه وجود ندارد</h1>
+        <p>نشانی واردشده به هیچ صفحه‌ای از پایش یا هیچ صرافی تحت نظارتی نمی‌رسد.</p>
+        <a class="btn btn-primary" href="/">بازگشت به داشبورد</a>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script src="/common.js"></script>
+<script>wireSidebar();</script>
+</body>
+</html>

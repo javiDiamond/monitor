@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>2,678,500 IRR | رمزینکس تریدر | تتر</title>
+<style>
+ body { font-family: Tahoma, sans-serif; background: #fff; color: #111; margin: 0; padding: 16px; }
+ .market-overview { border: 1px solid #eee; border-radius: 12px; padding: 16px; }
+ .flex-row-between-center { display: flex; gap: 24px; align-items: center; }
+ .flex-row-start-center { display: flex; gap: 8px; align-items: center; }
+ .flex-col-start-between { display: flex; flex-direction: column; }
+ .markets-container { display: flex; gap: 8px; margin-top: 12px; }
+ .MuiTypography-caption { font-size: 12px; color: #666; }
+</style>
+</head>
+<body>
+
+<!-- The pasted .market-overview block, verbatim in shape: the caption is a
+     MuiTypography-caption <span> inside div.flex-row-start-center, and the
+     value is the FIRST non-empty <p> under the same flex-col-start-between.
+     The probe must read 2,678,500 from this and nothing else. -->
+<div class="market-overview">
+  <div class="flex-row-between-center">
+    <div class="flex-col-start-between">
+      <div class="flex-row-start-center">
+        <span class="MuiTypography-caption">قیمت تتر</span>
+      </div>
+      <div>
+        <p>2,678,500</p>
+        <p>IRR</p>
+      </div>
+    </div>
+    <div class="flex-col-start-between">
+      <div class="flex-row-start-center">
+        <span class="MuiTypography-caption">تغییرات ۲۴ ساعته</span>
+      </div>
+      <div><span>1.66%</span></div>
+    </div>
+    <div class="flex-col-start-between">
+      <div class="flex-row-start-center">
+        <span class="MuiTypography-caption">بیشترین قیمت روزانه</span>
+      </div>
+      <div><span>2,620,000</span></div>
+    </div>
+    <div class="flex-col-start-between">
+      <div class="flex-row-start-center">
+        <span class="MuiTypography-caption">کمترین قیمت روزانه</span>
+      </div>
+      <div><span>2,594,000</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- The market strip. Verified live: 60 a.slide-item anchors, and this market's
+     chip carries the price. The probe must read the tether chip and leave the
+     neighbouring markets alone. -->
+<div class="markets-container">
+  <a class="slide-item" href="/app/markets/12/spot">
+    <span>بیت‌کوین</span>
+    <span>6,120,400,000</span>
+  </a>
+  <a class="slide-item" href="/app/markets/11/spot">
+    <span>تتر</span>
+    <span>1.66%</span>
+    <span>2,678,500</span>
+  </a>
+  <a class="slide-item" href="/app/markets/13/spot">
+    <span>اتریوم</span>
+    <span>184,200,000</span>
+  </a>
+</div>
+
+</body>
+</html>

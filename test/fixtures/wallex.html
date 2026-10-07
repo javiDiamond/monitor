@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>قیمت تتر | والکس</title></head><body>
+
+<!--
+  Fixture for the wallex adapter, reproducing the measured live behaviour:
+  the server-rendered document discloses the USDT price in six captioned
+  slots, and the client withdraws ALL of them ~1.2s after load — the headline,
+  dollar, converter and current slots swap to «—», the high/low rows are
+  removed outright, and the market-volume figures (comma-grouped, like a
+  price) keep ticking. A probe that scans too far past a withdrawn caption
+  would read one of those volumes as a price and invent a violation.
+-->
+
+<div><div>
+  <span>آخرین قیمت تتر</span><span>(بروزرسانی هر ۳۰ ثانیه)</span>
+</div><div>
+  <div class="mui-headline"><span class="wx">258,118</span></div>
+  <div>تومان</div>
+</div></div>
+
+<div><div><span>قیمت تتر به دلار</span></div>
+  <div class="mui-wmne9r"><span class="wx">$1</span></div></div>
+
+<div><div>
+  <div>قیمت تتر به تومان</div>
+  <div>برابر است با: </div>
+  <div><span class="wx">258,118</span> </div>
+</div></div>
+
+<div><span>قیمت فعلی</span><div><span class="wx">258,117</span></div></div>
+
+<div><span>بیشترین قیمت (۲۴ ساعت)</span><span class="wx">258,138</span></div>
+<div><span>کمترین قیمت (۲۴ ساعت)</span><span class="wx">257,951</span></div>
+
+<!-- decoys: comma-grouped numbers behind NO caption, exactly like the live page -->
+<div><span>حجم بازار</span><span>71,747,521,964</span></div>
+<div><span>ارزش کل قفل شده</span><span>184,063,638,247</span></div>
+
+<script>
+  // The live withdrawal, at fixture speed. The slots swap to «—» and the
+  // high/low rows disappear entirely — both shapes the probe must survive.
+  setTimeout(() => {
+    document.querySelectorAll('.wx').forEach((el) => { el.textContent = '—'; });
+    [...document.querySelectorAll('span')]
+      .filter((s) => /^(بیشترین|کمترین) قیمت/.test(s.textContent.trim()))
+      .forEach((s) => s.parentElement.remove());
+  }, 250);
+</script>
+
+</body></html>

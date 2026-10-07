@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="fa" dir="rtl" class="light"><head><meta charset="utf-8">
+<title>قیمت تتر (USDT) | خرید و فروش تتر در صرافی اتراکس</title>
+<meta name="description" content="بررسی قیمت لحظه ای ارز تتر در صرافی اتراکس | خرید و فروش ارز دیجیتال USDT با کمترین کارمزد">
+<link rel="canonical" href="https://eterex.com">
+</head><body class="font-sans antialiased bg-white" dir="rtl">
+
+<!--
+  Eterex-shaped fixture.
+
+  FOUR price locations in TWO digit systems — verified live, both styles in use
+  at the same time:
+      hero / input   268,400      Latin, ASCII comma
+      rate / stat    ۲۶۸٬۴۰۰      Persian digits, U+066C
+
+  THE POINT OF THE HERO BLOCK. Every span on the price line carries inline
+  `color: transparent`, `-webkit-text-fill-color: transparent` and
+  `background-clip: text`, with the colour supplied by a gradient. In a captured
+  DOM that gradient serialises as an EMPTY `background-image: ;`, which reads as
+  though the digits paint nothing — i.e. as though the price were hidden behind
+  transparency. Resolved in a real browser it is a live gradient, the glyphs
+  paint through it, and the price is plainly visible:
+
+      color                   → rgba(0, 0, 0, 0)
+      -webkit-text-fill-color → rgba(0, 0, 0, 0)
+      background-image        → linear-gradient(...)
+      background-clip         → text
+
+  So the gradient IS written here, in its resolved form, because a fixture cannot
+  execute the site's runtime CSS that produces it. This fixture therefore
+  represents the RENDERED page, not the capture — and the capture artifact is
+  documented in the adapter and the README rather than reproduced here, because
+  reproducing it would make the fixture assert something false about the site.
+
+  THE CLASS COLLISION. The hero's `1` (the USDT quantity) carries a class list
+  BYTE-IDENTICAL to the price span's. Nothing here may be found by class.
+-->
+
+<!-- ===== DISPLAY SITE 1: the hero banner ===== -->
+<div class="text-center mt-12 py-10 relative z-10 w-full h-[200px] bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center bg-[url('/assets/Download/Header.avif')]">
+  <div class="flex flex-row items-center gap-6 justify-center">
+    <h1 class="tracking-wider" style="background:linear-gradient(92.3deg, #7B90FF -6.82%, #0F34F4 75.93%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent">USDT</h1>
+    <div class="w-14 h-20 flex items-start justify-start pt-2">
+      <img alt="usdt" loading="lazy" width="56" height="56" src="https://static-dl.eterex.com/icons-v2/svg/usdt_.svg">
+    </div>
+  </div>
+  <div class="flex flex-row-reverse items-center justify-center gap-3">
+    <div class="flex flex-row items-center justify-center gap-3">
+      <span class="text-[24px] text-grayscale-07 leading-[36px] font-[700]" style="background-image: linear-gradient(92.3deg, #7B90FF -6.82%, #0F34F4 75.93%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">268,400</span>
+      <span class="text-[16px] text-grayscale-05 leading-[24px] font-[400]" style="background-image: linear-gradient(92.3deg, #7B90FF -6.82%, #0F34F4 75.93%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">تومان</span>
+    </div>
+    <div><span class="text-[20px] text-grayscale-05 leading-[32px] font-normal" style="color: transparent;">=</span></div>
+    <div class="flex flex-row items-center justify-center gap-3">
+      <span class="text-[16px] text-grayscale-05 leading-[24px] font-[400]" style="color: transparent;">USDT</span>
+      <!--
+        THE CLASS COLLISION: identical class list to the price span above.
+        A class-based selector for the price also matches this quantity.
+      -->
+      <span class="text-[24px] text-grayscale-07 leading-[36px] font-[700]" style="background-image: ; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">1</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DISPLAY SITE 2: the trading input ===== -->
+<div class="flex flex-row items-center gap-4">
+  <span>تبدیل با احتساب کارمزد 0.02%</span>
+</div>
+<div class="w-full relative mb-4">
+  <input id="irtAmount" type="text" inputmode="numeric" class="text-xl font-semibold text-white" placeholder="مقدار را وارد کنید" value="268,400">
+  <div class="h-8 flex items-center justify-center absolute right-6 top-5 gap-4">
+    <img alt="IRT" loading="lazy" src="https://static-dl.eterex.com/icons-v2/svg/irt_.svg">
+    <span>IRT</span>
+  </div>
+</div>
+<div class="w-full relative mb-6">
+  <!-- The quantity on the other side of the widget. -->
+  <input id="coinAmount" type="text" inputmode="decimal" class="text-xl font-semibold text-white" placeholder="مقدار را وارد کنید" value="1">
+  <div class="h-8 flex items-center justify-center absolute right-6 top-5 gap-4">
+    <span>USDT</span>
+  </div>
+</div>
+
+<!-- ===== DISPLAY SITE 3: the «نرخ تبدیل» row (Persian digits, live) ===== -->
+<div class="flex flex-row items-center justify-between w-full mb-6">
+  <span class="text-[14px] text-grayscale-05 leading-[20px] font-[700] text-white">نرخ تبدیل</span>
+  <div class="flex flex-row-reverse items-center justify-center gap-3">
+    <div class="flex flex-row items-center justify-center gap-2">
+      <span class="text-[16px] text-grayscale-05 leading-[24px] font-[400] text-white">USDT</span>
+      <span class="text-[20px] text-grayscale-05 leading-[32px] font-[700] text-white">1</span>
+    </div>
+    <div><span class="text-[16px] text-grayscale-05 leading-[24px] font-[400] text-white">=</span></div>
+    <div class="flex flex-row items-center justify-center gap-2">
+      <span class="text-[16px] text-grayscale-05 leading-[24px] font-[400] text-white">IRT</span>
+      <span class="text-[20px] text-grayscale-05 leading-[32px] font-[700] text-white">۲۶۸٬۴۰۰</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DECOYS: step numbers, sharing text-grayscale-07 with the price spans ===== -->
+<div class="flex flex-row items-start justify-start gap-8 w-full">
+  <span class="text-[24px] text-grayscale-07 leading-[36px] font-[700]" style="background:linear-gradient(92.3deg, #7B90FF -6.82%, #0F34F4 75.93%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent">۱</span>
+  <span class="text-[24px] text-grayscale-07 leading-[36px] font-[700]" style="background:linear-gradient(92.3deg, #7B90FF -6.82%, #0F34F4 75.93%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent">۲</span>
+  <span class="text-[24px] text-grayscale-07 leading-[36px] font-[700]" style="background:linear-gradient(92.3deg, #7B90FF -6.82%, #0F34F4 75.93%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent">۳</span>
+  <span class="text-[24px] text-grayscale-07 leading-[36px] font-[700]" style="background:linear-gradient(92.3deg, #7B90FF -6.82%, #0F34F4 75.93%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent">۴</span>
+</div>
+
+<!-- ===== «اطلاعات بازار تتر» accordion (expanded on the live page) ===== -->
+<div class="py-5 border-b">
+  <button type="button" aria-expanded="true" aria-controls="collapse-content">
+    <span style="background:linear-gradient(92.3deg, rgb(123,144,255) -6.82%, rgb(15,52,244) 75.93%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent">اطلاعات بازار تتر</span>
+  </button>
+  <div id="collapse-content" class="overflow-hidden" style="height: 244px; opacity: 1;">
+    <div class="pt-4 text-right">
+      <div class="grid grid-cols-2 gap-10">
+        <span>تغییرات ۲۴ ساعته</span><span class="text-green">—</span>
+      </div>
+      <div class="grid grid-cols-2 gap-10">
+        <span>قیمت دلاری</span><span>$1.00</span>
+      </div>
+      <div class="grid grid-cols-2 gap-10">
+        <!-- ===== DISPLAY SITE 4: the stat, Persian digits + unit inside the element ===== -->
+        <span>قیمت تومانی</span><span class="text-grayscale-05">۲۶۸٬۴۰۰ تومان</span>
+      </div>
+      <div class="grid grid-cols-2 gap-10">
+        <span>حداکثر ارز قابل عرضه</span><span>نامحدود</span>
+      </div>
+      <div class="grid grid-cols-2 gap-10">
+        <span>ارز در گردش</span><span class="text-grayscale-05">نامحدود</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+  COLLAPSED ACCORDIONS. Reproduced so a test can prove no price hides in one —
+  the live page's collapsed panels carry prose only.
+-->
+<div class="py-5 border-b">
+  <button type="button" aria-expanded="false" aria-controls="collapse-content">
+    <span style="color: transparent;">قیمت لحظه ای تتر</span>
+  </button>
+  <div id="collapse-content" class="overflow-hidden" style="height: 0px; opacity: 0;">
+    <div class="pt-4 text-right">
+      <span class="text-[16px] text-grayscale-06 leading-[24px] font-[400] whitespace-pre-line leading-relaxed">قیمت Tether USDt یکی از موضوعات پرجستجو در دنیای ارزهای دیجیتال است…</span>
+    </div>
+  </div>
+</div>
+
+<!--
+  EXCLUDED BY POLICY — the chart, a cross-origin iframe:
+    <iframe src="https://app.eterex.com/chart?marketId=86b45906-…&mode=light">
+
+  VERIFIED ABSENT from the live page, so a future change is noticeable:
+    - any price in a <script>, in the RSC flight payload (only chunk
+      bootstrapping), or in any meta tag
+    - any JSON-LD block at all — there is none
+    - any price inside a collapsed accordion
+    - any other coin on the page: it is single-coin, so there is no
+      comparison table, market ticker or related-assets strip
+    - any filter / blur / mask / clip-path / opacity near a price
+    - an API endpoint: the feed was not investigated for this exchange
+-->
+
+</body></html>

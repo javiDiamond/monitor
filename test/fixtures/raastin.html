@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>قیمت لحظه ای تتر | راستین</title></head><body>
+
+<!--
+  Deliberately hostile fixture for the white-label (raastin/arzplus) adapter.
+  It reproduces the CURRENT live page, which shows the tether price NOWHERE at
+  rest — the only toman figure is the buy converter's output once a user types
+  into the tether field. Traps reproduced:
+
+    - captions carry a ZWNJ (U+200C) between words, so a hand-typed literal
+      would match zero elements and degrade the probe to null silently;
+    - a second 'IRT' badge sits in a button elsewhere on the page;
+    - a stale related-article price sits in a sibling card;
+    - framework bootstrap noise: comma-grouped integers inside <script>
+      blocks that are JS constants, not prices;
+    - the conversion itself: the live page computes the toman figure on the
+      'input' event, which the fixture emulates with a two-line listener.
+-->
+
+<div class="flex items-center gap-2">
+  <button type="button"><span class="badge">IRT</span></button>
+</div>
+
+<h1>قیمت تتر</h1>
+<!-- no price beside the headline any more — the figure is gone from the page -->
+
+<div id="price-trade">
+  <div class="card">
+    <div class="row">
+      <label>پرداخت می‌کنم</label>
+      <div class="badge"><img alt="IRT"><label>IRT</label></div>
+    </div>
+    <input type="text" inputmode="decimal" placeholder="0" value="">
+  </div>
+  <button type="button" aria-label="جابجایی خرید و فروش">⇅</button>
+  <div class="card">
+    <div class="row">
+      <label>دریافت می‌کنم</label>
+      <div class="badge"><img alt="USDT"><label>USDT</label></div>
+    </div>
+    <input type="text" inputmode="decimal" placeholder="0" value="">
+  </div>
+  <button type="button">خرید تتر</button>
+</div>
+
+<!-- the site's own conversion: typing in the tether field fills the toman field -->
+<script>
+  document.querySelector('#price-trade').addEventListener('input', function (e) {
+    if (e.target.value === '1') {
+      document.querySelector('#price-trade .card input').value = '268,968';
+    }
+  });
+</script>
+
+<!-- stale related-article price: must never be read -->
+<div class="rounded-2xl border">
+  <a href="#"><label>قیمت تتر امروز 5 مهر 1405 به تومان، 235,388 تومان است. دلیل رشد قیمت</label></a>
+</div>
+
+<!--
+  Framework bootstrap noise. A real site carries comma-grouped integers inside
+  <script> blocks that are JS constants, not prices — a whole-document number
+  scan picks these up. Pinned here so the probe can never start reading one.
+-->
+<script>window.__BOOT__={chunk:"240,185",rev:"268,000"};</script>
+
+</body></html>

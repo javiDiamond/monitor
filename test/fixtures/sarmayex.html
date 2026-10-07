@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fa" dir="rtl" class="dark" data-number="fa" translate="no"><head><meta charset="utf-8">
+<title>صرافی ارز دیجیتال سرمایکس ، خرید ارز دیجیتال | فروش ارز دیجیتال</title>
+<meta name="description" content="صرافی آنلاین ارز دیجیتال سرمایکس بازار معتبر و امن فروش و خرید ارز دیجیتال در ایران">
+</head><body>
+
+<!--
+  Sarmayex-shaped fixture.
+
+  THREE live display sites for one price, plus the traps. Two details are
+  reproduced exactly as the live site renders them, because both broke a first
+  attempt at this adapter:
+
+  1. DIGIT FORMAT DIFFERS BY LOCATION. The ticker prints Latin `267,433`; the
+     table row and the hero card print Persian `۲۶۷٬۴۳۳` with U+066C. An
+     adapter written only against the pasted DOM (which showed Latin digits
+     everywhere) would have missed the two locations that actually matter.
+
+  2. THE VOLUME IS MIXED-FORMAT. The live cell is `۴۶٬۱۴۴.51` — Persian digits
+     in the integer part, LATIN digits in the decimal. It parses perfectly well
+     into 46144.51, so anything that reads the price `<td>` as text would report
+     it as the price. This is the single most dangerous string on the page.
+
+  The nastiest trap by name: the coin «تتر گلد» (Tether-Gold, XAUT) has the
+  word تتر INSIDE ITS OWN NAME. Any `text=تتر` matcher reads Tether-Gold at
+  1,113,436,160. The adapter must anchor on the pair `/trade/USDT_IRT`.
+-->
+
+<div class="marquee relative overflow-x-hidden max-w-full">
+  <div class="track absolute">
+    <!-- ===== DISPLAY SITE 1: the ticker tape (Latin digits, Latin comma) ===== -->
+    <div class="flex items-center gap-x-3">
+      <a target="_blank" href="https://market.sarmayex.com/trade/USDT_IRT" class="relative flex items-center gap-x-2">
+        <p>تتر, USDT</p>
+        <div class="flex gap-x-1"><p>267,433</p><svg aria-label="svg-tmn" viewBox="0 0 14 14"></svg></div>
+      </a>
+      <!-- DECOY: the USD half of the ticker. Every one of these ends in
+           /trade/<X>_USDT, so any `href*=USDT` matcher lands here. -->
+      <a target="_blank" href="https://market.sarmayex.com/trade/BTC_USDT" class="relative flex items-center gap-x-2">
+        <p>بیت کوین, BTC</p>
+        <div class="flex gap-x-1"><p>84,857.88</p></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DISPLAY SITE 2: the market table ===== -->
+<table>
+  <thead>
+    <tr>
+      <th>نام رمزارز</th>
+      <th>
+        <!-- DECOY: a caption-based matcher ("تومان" / "تتر") lands on this
+             unit toggle button, not on a price. -->
+        قیمت
+        <div role="radiogroup" class="p-1">
+          <button role="radio" aria-checked="true"><span>تومان</span></button>
+          <button role="radio" aria-checked="false" tabindex="-1"><span>تتر</span></button>
+        </div>
+      </th>
+      <th>حجم معاملات (24 ساعت)</th>
+      <th>تغییرات (24 ساعت)</th>
+      <th>عملیات</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr class="hover:bg-bg-200 text-xs font-semibold">
+      <td class="text-sm">
+        <div class="flex items-center gap-x-2" alt="تتر">
+          <img alt="Tether sarmayex" src="https://file.sarmayex.com/images/svg/USDT.svg" class="mr-3 h-[35px] w-[35px]">
+          <div class="flex items-baseline gap-x-1">
+            <span>تتر</span>
+            <div class="text-xs"><span class="text-neutral-500">USDT</span></div>
+          </div>
+        </div>
+      </td>
+      <td class="p-3">
+        <div class="flex flex-col items-center justify-center gap-2 md:items-start">
+          <!-- THE PRICE. Persian digits, U+066C. -->
+          <div>۲۶۷٬۴۳۳</div>
+          <div class="flex md:hidden">
+            <svg style="display: none;" fill="#F93839"></svg>
+            <svg fill="#2DC653"></svg>
+          </div>
+          <!-- DECOY (mobile copy): the change lives INSIDE the price <td>,
+               split across two spans with a trailing space. -->
+          <div class="text-xs inline-flex whitespace-nowrap text-success">
+            <!----><!----><bdi class="items-center"><span>+</span><span>0.256% </span></bdi>
+            <span class="icon-angle-up v-icon text-sm hidden" role="img"><!----></span>
+          </div>
+        </div>
+      </td>
+      <!-- DECOY: comma-grouped, two decimals, non-zero, and MIXED digit
+           scripts. Parses cleanly into 46144.51. Never read. -->
+      <td class="hidden p-3 lg:table-cell">۴۶٬۱۴۴.51</td>
+      <!-- DECOY (desktop copy): the same change again, in its own <td>, and
+           this one omits the `+`. -->
+      <td class="hidden gap-x-1 p-3 md:table-cell">
+        <div class="flex gap-1">
+          <svg style="display: none;" fill="#F93839"></svg>
+          <svg fill="#2DC653"></svg>
+          <div class="text-xs inline-flex whitespace-nowrap text-success"><bdi class="items-center"><span>0.256%</span></bdi></div>
+        </div>
+      </td>
+      <td class="p-3">
+        <div class="operation flex justify-center"><a href="https://market.sarmayex.com/trade/USDT_IRT" target="_blank"> معامله </a></div>
+      </td>
+    </tr>
+
+    <tr class="hover:bg-bg-200 text-xs font-semibold">
+      <td class="text-sm">
+        <div class="flex items-center gap-x-2" alt="بیت کوین">
+          <img alt="Bitcoin sarmayex" src="https://file.sarmayex.com/images/svg/BTC.svg">
+          <div class="flex items-baseline gap-x-1"><span>بیت کوین</span><div class="text-xs"><span>BTC</span></div></div>
+        </div>
+      </td>
+      <td class="p-3"><div class="flex flex-col items-center justify-center gap-2 md:items-start"><div>۲۲٬۶۸۶٬۳۱۹٬۷۷۶</div></div></td>
+      <td class="hidden p-3 lg:table-cell">1.010867</td>
+      <td class="hidden p-3 md:table-cell"><div class="text-xs"><bdi><span>0.339%</span></bdi></div></td>
+      <td class="p-3"><div class="operation flex justify-center"><a href="https://market.sarmayex.com/trade/BTC_IRT" target="_blank"> معامله </a></div></td>
+    </tr>
+
+    <!--
+      ===== THE NAMED TRAP =====
+
+      «تتر گلد» — Tether-Gold. The word تتر is INSIDE THE COIN'S OWN NAME, and
+      its price is 1,113,436,160. Any matcher that looks for the word تتر, or
+      that trusts a `contains('تتر')` caption, reads THIS row and reports
+      Tether-Gold as the tether rate.
+
+      Note it also contains the substring "USDT" in "Tether-Gold"? No — but its
+      trade link is /trade/XAUT_IRT, so the pair-based selector skips it. Both
+      the name and the pair in this row are asserted in the tests.
+    -->
+    <tr class="hover:bg-bg-200 text-xs font-semibold">
+      <td class="text-sm">
+        <div class="flex items-center gap-x-2" alt="تتر گلد">
+          <img alt="Tether-Gold sarmayex" src="https://file.sarmayex.com/images/svg/XAUT.svg">
+          <div class="flex items-baseline gap-x-1"><span>تتر گلد</span><div class="text-xs"><span>XAUT</span></div></div>
+        </div>
+      </td>
+      <td class="p-3"><div class="flex flex-col items-center justify-center gap-2 md:items-start"><div>۱٬۱۱۳٬۴۳۶٬۱۶۰</div></div></td>
+      <td class="hidden p-3 lg:table-cell">15.73163</td>
+      <td class="hidden p-3 md:table-cell"><div class="text-xs"><bdi><span>0.614%</span></bdi></div></td>
+      <td class="p-3"><div class="operation flex justify-center"><a href="https://market.sarmayex.com/trade/XAUT_IRT" target="_blank"> معامله </a></div></td>
+    </tr>
+
+  </tbody>
+</table>
+
+<!-- ===== DISPLAY SITE 3: the hero card ===== -->
+<section class="grid grid-cols-2 gap-2">
+  <span> شکار سود </span>
+  <a href="https://market.sarmayex.com/trade/USDT_IRT" class="flex items-center rounded-lg" style="backdrop-filter: blur(5px);" target="_blank">
+    <img alt="USDT icon" src="https://file.sarmayex.com/images/svg/USDT.svg" class="ml-3 h-[30px] w-[30px]">
+    <div class="flex flex-col items-start">
+      <p class="text-sm">تتر</p>
+      <span class="my-1 text-xs">USDT/IRT</span>
+    </div>
+    <div class="mr-auto flex flex-col">
+      <!-- THE PRICE again, Persian digits, U+066C. -->
+      <p class="flex items-center justify-end text-sm"><span>۲۶۷٬۴۳۳</span><svg aria-label="svg-tmn" viewBox="0 0 14 14"></svg></p>
+      <div class="flex justify-center md:mt-2">
+        <div class="text-xs inline-flex text-success"><bdi class="items-center"><span>+</span><span>0.256 % </span></bdi></div>
+      </div>
+    </div>
+  </a>
+</section>
+
+<!--
+  EXCLUDED BY POLICY — recorded here so the exclusion is visible and testable.
+
+  سرمایکس also states the tether rate in editorial prose:
+    «قیمت تتر به ۲۶۸ هزار تومان رسید؛ رکوردشکنی در سایه محدودیت‌های معاملاتی»
+
+  Persian digits, no thousands separator, stale article text rather than a live
+  quote. The regulator ruled this excluded, matching the راستین precedent for
+  stale article figures. It is prose about a past price, not a published quote,
+  and a `[\d,]+` matcher cannot reach it anyway.
+-->
+<article class="blog-card">
+  <h3>قیمت تتر به ۲۶۸ هزار تومان رسید؛ رکوردشکنی در سایه محدودیت‌های معاملاتی</h3>
+  <p>رشد ۳۵ هزارتومانی در معاملات تتر…</p>
+</article>
+
+<!--
+  Verified absent from the live page, recorded so a future change is noticed:
+    - no price in any data-* attribute
+    - JSON-LD is Organization/FAQPage only; no schema.org Offer/price
+    - no second tether price in the footer, nav, or 24h-movers strip
+-->
+
+</body></html>

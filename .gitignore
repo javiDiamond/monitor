@@ -1,0 +1,12 @@
+node_modules/
+server.log
+*.log
+shots/
+
+# Local editor/session state, not source.
+.kilo/
+
+# Build artifacts.
+*.zip
+# ZCode workspace state.
+.zcode/

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<title>صرافی ارز دیجیتال ایران اکسچنج | خرید و فروش امن با کارمزد پایین</title>
+<meta name="description" content="خرید تتر در ایران اکسچنج با تسویه آنی، کارمزد شفاف و بدون اسپرد پنهان انجام می شود.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"تتر","offers":{"@type":"Offer","price":2688000,"priceCurrency":"IRR","availability":"https://schema.org/InStock","url":"https://iranexchange.com/buy-usdt"}}</script>
+<style>
+  /*
+    Minimal stand-in for the two Tailwind utilities whose behaviour is the trap
+    here. Without a stylesheet `sm:hidden` is just an inert class name, and the
+    mobile-only price cell would wrongly look visible — so the fixture would
+    stop reproducing the live page. At 1440px: the mobile cell is display:none,
+    the two desktop price cells are display:table-cell. That matches the site.
+  */
+  @media (min-width: 640px) {
+    .sm\:hidden { display: none; }
+    .sm\:table-cell { display: table-cell; }
+  }
+</style>
+</head><body>
+
+<!--
+  IranExchange-shaped fixture.
+
+  THE POINT OF THIS FIXTURE IS THE FORMAT SPLIT. The same page renders its
+  tether rate twice in two incompatible styles:
+
+    widget   ۲۶۸٬۷۵۰   Persian digits, U+066C ARABIC THOUSANDS SEPARATOR
+    table    268,800   Latin digits,   U+002C COMMA
+
+  Both are live prices and they do not agree with each other, so no probe may
+  assume one format or one number.
+
+  THREE COPIES OF THE TABLE PRICE: two desktop columns with byte-identical class
+  lists (distinguished only by position), plus a mobile-only `sm:hidden` cell
+  that is display:none at our viewport. The two desktop cells wrap their price
+  in <a aria-label="USDT">; the mobile cell does NOT — that asymmetry is the
+  only reliable discriminator, so it is reproduced exactly.
+
+  «تومان» is deliberately everywhere — it occurs over a hundred times on the
+  real page, 72 of them as bare labels inside this table. Reproduced so the
+  fixture proves the adapter is not leaning on that word.
+-->
+
+<!-- ===== DISPLAY SITE 1: the conversion widget (primary) ===== -->
+<section id="hero-section" class="flex flex-col items-start justify-between gap-8 py-10">
+  <div class="w-full rounded-lg shadow-light flex-1">
+    <div class="mb-4 flex h-16 w-full">
+      <div class="flex w-full flex-col items-start">
+        <div class="flex w-full rounded-lg border border-outline-variant">
+          <div class="flex w-1/2 items-center gap-2 border-l">
+            <div class="flex items-center gap-2"><p class="text-sm">تومان</p></div>
+            <span class="text-xs">تومان</span>
+          </div>
+          <input class="w-1/2" placeholder="مقدار به تومان" dir="ltr" inputmode="numeric" value="">
+        </div>
+        <!-- The price row. Two halves: the quantity «1 تتر», and the rate. -->
+        <div class="my-4 flex w-full items-center justify-between gap-2 overflow-hidden text-xxs font-normal">
+          <div class="flex max-w-[calc(50%-4px)] gap-1"><p class="truncate">1</p><p>تتر</p></div>
+          <div class="flex max-w-[calc(50%-4px)] gap-1"><p class="truncate">۲۶۸٬۷۵۰</p><p>تومان</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--
+  DECOY CARD STRIP — «لیست قیمت ارزهای دیجیتال».
+  USDS is a stablecoin quoted in the SAME تومان band, and in the SAME Persian +
+  U+066C format as the widget. It is the closest near-miss on the page.
+-->
+<section id="coins-overview">
+  <h3>لیست قیمت ارزهای دیجیتال</h3>
+  <div class="grid">
+    <article><p class="text-sm">یو اس دی سی</p><p class="text-xs">USDS</p><p class="text-lg">۲۶۹٬۲۶۰</p><p class="text-xs">تومان</p></article>
+    <article><p class="text-sm">تون کوین</p><p class="text-xs">GRAM</p><p class="text-lg">۴۰۸٬۴۸۲</p><p class="text-xs">تومان</p></article>
+    <article><p class="text-sm">زی کش</p><p class="text-xs">ZEC</p><p class="text-lg">۳۴۸٬۷۱۳٬۸۴۸</p><p class="text-xs">تومان</p></article>
+    <article><p class="text-sm">سند</p><p class="text-xs">SAND</p><p class="text-lg">۲۰٬۳۸۴</p><p class="text-xs">تومان</p></article>
+  </div>
+</section>
+
+<!-- ===== DISPLAY SITE 2: the market table ===== -->
+<section dir="ltr" class="min-h-[50vh]">
+  <table dir="rtl" class="inline-table w-full">
+    <thead class="hidden md:table-header-group">
+      <tr>
+        <th>نام رمزارز</th>
+        <!-- THE COLUMN ORDER MATTERS: children[1] and children[2] of every row. -->
+        <th>قیمت خرید</th>
+        <th>قیمت فروش</th>
+        <th>تغییر 24 ساعت</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!--
+        A neighbour row. Comma-grouped, non-zero, and structurally identical to
+        the tether row — reading the wrong row is the easy mistake here.
+      -->
+      <tr class="hover:bg-signUp-bg cursor-pointer rounded-sm text-sm">
+        <td class="max-w-[200px] truncate whitespace-nowrap py-3 text-center">
+          <div class="flex items-center gap-2"><a aria-label="BTC" href="/market/BTC"><div class="flex items-center gap-2">
+            <img alt="BTC" class="rounded-full object-contain" src="/_next/image?url=BTC.png">
+            <div class="flex flex-col items-start"><p>بیت کوین</p><p dir="ltr"><span>Bitcoin</span><span>/</span><span>BTC</span></p></div>
+          </div></a></div>
+        </td>
+        <td class="hidden max-w-[200px] truncate whitespace-nowrap py-3 text-center sm:table-cell sm:text-right"><a aria-label="BTC" href="/market/BTC"><div class="flex gap-1"><span class="text-sm">22,781,878,299</span><span class="text-xxs">تومان</span></div></a></td>
+        <td class="hidden max-w-[200px] truncate whitespace-nowrap py-3 text-center sm:table-cell sm:text-right"><a aria-label="BTC" href="/market/BTC"><div class="flex gap-1"><span class="text-sm">22,690,932,678</span><span class="text-xxs">تومان</span></div></a></td>
+        <td class="hidden max-w-[200px] truncate whitespace-nowrap py-3 text-center sm:table-cell sm:text-right lg:table-cell"><a aria-label="BTC" href="/market/BTC"><div class="flex justify-start text-center"><p dir="ltr">-0.46%</p></div></a></td>
+        <td class="table-cell max-w-[200px] truncate whitespace-nowrap py-3 text-center sm:hidden"><a href="/market/BTC"><div class="sm:hidden"><div class="flex w-full items-center justify-end gap-1"><span>22,781,878,299</span><span class="text-xxs">تومان</span></div><div><p dir="ltr">-0.46%</p></div></div></a></td>
+        <td class="max-w-[200px] py-3 text-center last:hidden xl:last:table-cell"><button class="hidden lg:block">خرید و فروش</button></td>
+      </tr>
+
+      <!--
+        ===== THE TETHER ROW =====
+
+        ON THE LIVE SITE THIS ROW IS USUALLY ABSENT — the default table lists 24
+        coins and tether is not among them. It is reproduced here because a
+        captured DOM from an earlier load did contain it, and the probe must
+        work when it returns without ever requiring it.
+
+        Note the ASYMMETRY: children[1] and children[2] wrap their price in
+        `<a aria-label="USDT">`, and children[4] does not.
+      -->
+      <tr class="hover:bg-signUp-bg cursor-pointer rounded-sm text-sm">
+        <td class="max-w-[200px] truncate whitespace-nowrap py-3 text-center">
+          <div class="flex items-center gap-2 md:mr-3"><a aria-label="USDT" href="/market/USDT"><div class="flex items-center gap-2">
+            <img alt="USDT" loading="lazy" width="32" height="32" class="rounded-full object-contain" style="color: transparent;" src="/_next/image?url=https%3A%2F%2Firanexchange.com%2Fstrapi%2Fmedia%2FUSDT_fdec9b5fc3.png&amp;w=64&amp;q=75">
+            <div class="flex flex-col items-start"><p>تتر</p><p class="flex flex-row-reverse gap-1" dir="ltr"><span>Tether</span><span class="hidden xxs:block">/</span><span class="hidden xxs:block">USDT</span></p></div>
+          </div></a></div>
+        </td>
+        <!-- children[1] = قیمت خرید -->
+        <td class="hidden max-w-[200px] truncate whitespace-nowrap py-3 text-center sm:table-cell sm:text-right"><a aria-label="USDT" href="/market/USDT"><div class="flex gap-1"><span class="text-sm text-on-surface">268,800</span><span class="text-xxs tracking-[0.4px]">تومان</span></div></a></td>
+        <!-- children[2] = قیمت فروش. Byte-identical class list to children[1]. -->
+        <td class="hidden max-w-[200px] truncate whitespace-nowrap py-3 text-center sm:table-cell sm:text-right"><a aria-label="USDT" href="/market/USDT"><div class="flex gap-1"><span class="text-sm text-on-surface">268,800</span><span class="text-xxs tracking-[0.4px]">تومان</span></div></a></td>
+        <!-- DECOY: zero, and comma-free, so the pattern rejects it. -->
+        <td class="hidden max-w-[200px] truncate whitespace-nowrap py-3 text-center sm:table-cell sm:text-right lg:table-cell"><a aria-label="USDT" href="/market/USDT"><div class="flex justify-start text-center"><p dir="ltr" class="flex text-xs font-medium">0.00%</p></div></a></td>
+        <!--
+          DECOY: a THIRD copy of the price, in the mobile-only cell.
+          `sm:hidden` means display:none from 640px up, so at our 1440px
+          viewport it is in the DOM and in textContent but not rendered. Its
+          <a> deliberately has NO aria-label, and the adapter never probes it.
+        -->
+        <td class="table-cell max-w-[200px] truncate whitespace-nowrap py-3 text-center sm:hidden"><a href="/market/USDT"><div class="ml-3 flex flex-col items-end justify-start gap-1 sm:hidden"><div class="flex w-full items-center justify-end gap-1"><span>268,800</span><span class="text-xxs text-muted">تومان</span></div><div><div class="flex justify-start text-center"><p dir="ltr" class="flex text-xs font-medium">0.00%</p></div></div></div></a></td>
+        <td class="max-w-[200px] py-3 text-center last:hidden xl:last:table-cell"><button class="hidden w-28 rounded-sm lg:block">خرید و فروش</button></td>
+      </tr>
+
+      <!--
+        USDC — a 1:1 dollar peg quoted in the monitored band. Not the tether
+        rate by any policy this monitor implements, and not read; recorded here
+        because it is the clearest example of the question the monitor cannot
+        decide for the operator.
+      -->
+      <tr class="hover:bg-signUp-bg cursor-pointer rounded-sm text-sm">
+        <td class="max-w-[200px] truncate whitespace-nowrap py-3 text-center">
+          <div class="flex items-center gap-2"><a aria-label="USDC" href="/market/USDC"><div class="flex items-center gap-2">
+            <img alt="USDC" class="rounded-full object-contain" src="/_next/image?url=USDC.png">
+            <div class="flex flex-col items-start"><p>یو اس دی کوین</p><p dir="ltr"><span>USD Coin</span><span>/</span><span>USDC</span></p></div>
+          </div></a></div>
+        </td>
+        <td class="hidden max-w-[200px] truncate whitespace-nowrap py-3 text-center sm:table-cell sm:text-right"><a aria-label="USDC" href="/market/USDC"><div class="flex gap-1"><span class="text-sm">268,689</span><span class="text-xxs">تومان</span></div></a></td>
+        <td class="hidden max-w-[200px] truncate whitespace-nowrap py-3 text-center sm:table-cell sm:text-right"><a aria-label="USDC" href="/market/USDC"><div class="flex gap-1"><span class="text-sm">267,617</span><span class="text-xxs">تومان</span></div></a></td>
+        <td class="hidden max-w-[200px] py-3 text-center sm:table-cell sm:text-right lg:table-cell"><a aria-label="USDC" href="/market/USDC"><div><p dir="ltr">+0.01%</p></div></a></td>
+        <td class="table-cell py-3 text-center sm:hidden"><a href="/market/USDC"><div class="sm:hidden"><div class="flex w-full items-center justify-end gap-1"><span>268,689</span><span class="text-xxs">تومان</span></div></div></a></td>
+        <td class="max-w-[200px] py-3 text-center last:hidden xl:last:table-cell"><button class="hidden lg:block">خرید و فروش</button></td>
+      </tr>
+
+    </tbody>
+  </table>
+</section>
+
+<!--
+  NOT PROBED — recorded so the exclusion is visible and testable.
+
+  The JSON-LD Product block in <head> carries `"price":2688000,
+  "priceCurrency":"IRR"` — 268,800 تومان, correct to the unit, but inside a
+  <script>, so no visitor sees it. The React flight payload likewise embeds
+  `sellToIranicardCurrencyPrice`. Payload disclosure is a note, not a probe,
+  following the کیف پول من / رمزینکس precedent.
+
+  VERIFIED ABSENT from the live page, so a future change is noticeable:
+    - any concealment (no blur, opacity, mask, clip-path or display:none
+      anywhere on or above a price)
+    - a tether price in any meta tag
+    - a tether price in a header ticker, footer, or sidebar
+    - a tether card in the coin-card strip
+    - any chart carrying a tether price: all nine chart iframes explicitly
+      disable show_price/show_high_price/show_low_price and none of their nine
+      symbols is USDT
+-->
+
+</body></html>

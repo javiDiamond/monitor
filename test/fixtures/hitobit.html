@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="fa-IR" dir="rtl" class="rtl"><head><meta charset="UTF-8">
+<title>پلتفرم هوشمند معاملات رمز ارز - هیتوبیت</title>
+<link rel="canonical" href="https://hitobit.com/fa/">
+</head><body class="rtl page-template-default page page-id-4042 l-body Zephyr_8.4">
+
+<!--
+  Hitobit-shaped fixture.
+
+  ONE price, in one span with a stable id — the simplest page in the set, and
+  the reason the trap list below is the interesting part.
+
+  THE TRAPS:
+    1. the market table's `.quote-sign` cells carry comma-grouped, non-zero USD
+       prices (`2,683.310000000000`). A text sweep reads `2,683` instantly, and
+       the class is applied broadly — percentage and volume cells carry it too;
+    2. the same table's تومان column is ABBREVIATED with Persian magnitude words
+       (`20.02 هزار`, `721.90 میلیون`, `1.12 میلیارد`), so it cannot match a
+       plain comma-grouped integer. That is luck, not design;
+    3. `#dominance-btc` and `#market-cap` are SWAPPED on the live site — the id
+       named for BTC dominance actually holds the MARKET CAP, and vice versa.
+       Reproduced faithfully, because a fixture that quietly corrects the site's
+       bug would be testing markup that does not exist;
+    4. bare counters 99 / 151 / +۵۰ / 3;
+    5. the en-dash placeholder the span holds before the page's own script fills
+       it (measured live: " – " at t=0ms, "269,033" by t≈1500ms).
+-->
+
+<section class="l-section wpb_row us_custom_cdd86b18 hero-section1 height_small">
+  <div class="l-section-h i-cf">
+    <div class="g-cols via_grid cols_2 valign_middle type_default" style="grid-gap:0rem;">
+
+      <!-- Rotating headline words. No numbers — pinned so nobody adds one. -->
+      <div class="wpb_column vc_column_container"><div class="vc_column-inner">
+        <div class="title-slider">
+          <span> بهترین </span>
+          <div class="word-slider-container">
+            <div class="words words-1">
+              <span style="padding-right: 5px;">قــیـــمــت</span>
+              <span style="padding-right: 2px;">پشتیبانی</span>
+              <span>تنوع رمزارز</span>
+            </div>
+          </div>
+          <h1 class="hitobit">با پلتفرم دانش‌بنیان هیتوبیت</h1>
+        </div>
+
+        <!-- DECOY: four bare counters, all non-zero, none a price. -->
+        <div class="trade-v">
+          <div class="trade-cell"><p class="ttle">تعداد ارزهای دیجیتال</p><p class="nmber" id="cryptocurrency-num">99</p></div>
+          <span class="vertical-line"></span>
+          <div class="trade-cell"><p class="ttle">بازارهای معاملاتی</p><p class="nmber" id="market-num">151</p></div>
+          <span class="vertical-line"></span>
+          <div class="trade-cell"><p class="ttle">سال فعالیت</p><p class="nmber">+۵۰ <span class="num-tail">(متوسط و بزرگ)</span></p></div>
+          <span class="vertical-line"></span>
+          <div class="trade-cell"><p class="ttle">سال سابقه</p><p class="nmber">3 <span class="num-tail">سال</span></p></div>
+        </div>
+
+        <!--
+          DECOY, AND A REAL BUG ON THEIR SIDE: the two ids are swapped.
+          `#dominance-btc` holds the MARKET CAP; `#market-cap` holds the
+          DOMINANCE percentage. Both are non-zero. Preserved verbatim.
+        -->
+        <div class="trade-v">
+          <div class="trade-cell">
+            <p class="ttle">Dominance BTC</p>
+            <p class="nmber" id="market-cap">% 63.69 </p>
+          </div>
+          <span class="vertical-line"></span>
+          <div class="trade-cell">
+            <p class="ttle">Market Cap</p>
+            <p class="nmber" id="dominance-btc">$ 3.30 T</p>
+          </div>
+        </div>
+      </div></div>
+
+      <div class="wpb_column vc_column_container"><div class="vc_column-inner">
+        <section class="l-section wpb_row us_custom_185e5a69 gradiant-usdt height_small">
+          <div class="l-section-h i-cf">
+            <div class="g-cols via_grid cols_2" style="grid-gap:0rem;">
+              <div class="wpb_column vc_column_container"><div class="vc_column-inner">
+                <div class="wpb_text_column us_custom_492b5d38"><div class="wpb_wrapper">
+                  <p style="text-align: center;"><a style="color: #fff;" href="https://hitobit.com/fa/buy-sell-crypto/?fiat=IRT&amp;crypto=USDT">بهترین قیمت خرید و فروش تتر</a></p>
+                </div></div>
+              </div></div>
+
+              <!-- ===== THE PRICE ===== -->
+              <div class="wpb_column vc_column_container"><div class="vc_column-inner">
+                <div class="wpb_text_column ttr-price1"><div class="wpb_wrapper">
+                  <p style="text-align: center;"><a href="https://hitobit.com/fa/buy-sell-crypto/?fiat=IRT&amp;crypto=USDT">قیمت بازار: <span id="last-usdt-price">269,033</span>تومان<img decoding="async" loading="lazy" class="alignnone size-full wp-image-4298" src="https://hitobit.com/wp-content/uploads/2024/04/arrow-white.png" alt="" width="14" height="15"></a></p>
+                </div></div>
+              </div></div>
+            </div>
+          </div>
+        </section>
+      </div></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== THE MARKET TABLE ===== -->
+<div class="main-page-table">
+  <table class="table-media">
+    <thead><tr><th>بازار</th><th>قیمت</th><th>تغییرات ۲۴ ساعت</th><th>حجم ۲۴ ساعت</th></tr></thead>
+    <tbody id="table-body">
+      <!--
+        NOTE: the table renders FIVE rows and none of them is USDT. Every pair is
+        quoted in dollars, so the string "USDT" appears in each label
+        (`SAND/USDT`, `ETH/USDT`, ...) and nowhere else — which is why a
+        "does this row mention USDT" test must not be trusted to prove a tether
+        price is present.
+      -->
+      <tr>
+        <td>SAND/USDT<span>سندباکس</span></td>
+        <td data-href="https://hitobit.com/fa/trade/SAND_USDT" id="sandusdt" class="price-color"><span class="quote-sign">0.074410000000<span class="rialsign"> $ </span></span><span class="toman">20.02 هزار  تومان</span></td>
+        <td><span class="quote-sign">+ 20.72%</span></td>
+        <td><span class="quote-sign">171.34 هزار</span></td>
+      </tr>
+      <tr>
+        <td>ETH/USDT<span>اتریوم</span></td>
+        <!-- DECOY: comma-grouped, non-zero, 12 decimal places. -->
+        <td data-href="https://hitobit.com/fa/trade/ETH_USDT" id="ethusdt" class="price-color"><span class="quote-sign">2,683.310000000000 <span class="rialsign"> $ </span></span><span class="toman">721.90 میلیون  تومان</span></td>
+        <td><span class="quote-sign">+ 0.73%</span></td>
+        <td><span class="quote-sign">484.85 هزار</span></td>
+      </tr>
+      <tr>
+        <td>ENJ/USDT<span>انجین‌کوین</span></td>
+        <td data-href="https://hitobit.com/fa/trade/ENJ_USDT" id="enusdt" class="price-color"><span class="quote-sign">0.033390000000 <span class="rialsign"> $ </span></span><span class="toman">8.98 هزار  تومان</span></td>
+        <td><span class="quote-sign">-1.94%</span></td>
+        <td><span class="quote-sign">20.86 هزار</span></td>
+      </tr>
+      <tr>
+        <td>ETC/USDT<span>اتریوم‌کلاسیک</span></td>
+        <td data-href="https://hitobit.com/fa/trade/ETC_USDT" id="etcusdt" class="price-color"><span class="quote-sign">8.818800000000 <span class="rialsign"> $ </span></span><span class="toman">2.37 میلیون  تومان</span></td>
+        <td><span class="quote-sign">+ 2.97%</span></td>
+        <td><span class="quote-sign">70.85 هزار</span></td>
+      </tr>
+      <tr>
+        <td>PAXG/USDT<span>پکس‌گلد</span></td>
+        <td data-href="https://hitobit.com/fa/trade/PAXG_USDT" id="paxgusdt" class="price-color"><span class="quote-sign">4,147.810000000000 <span class="rialsign"> $ </span></span><span class="toman">1.12 میلیارد </span></td>
+        <td><span class="quote-sign">-0.16%</span></td>
+        <td><span class="quote-sign">112.87 هزار</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!--
+  The page's own script holds the ticker feed and OVERWRITES the price span:
+
+      let marketusdtirt = await market.filter((i) => i.symbol === "USDTIRT");
+      document.querySelector("#last-usdt-price").innerHTML =
+        numberWithCommas(marketusdtirt[0].lastPrice);
+
+  Its neighbours are the trap: `bidPrice`, `weightedAveragePrice`,
+  `prevDayClosePrice`, the 24h open/high/low, an `askPrice` that is frequently
+  0, and a `quoteVolume` of ~12 billion in تومان. None of it is read — the
+  adapter never parses this payload, and no test may return a value from it.
+-->
+<script id="hitobit-market-payload">
+  var tickers = [
+    {"symbol":"USDTIRT","lastPrice":269033,"bidPrice":267914,"askPrice":0,
+     "openPrice":263933,"highPrice":269630,"lowPrice":263005,
+     "prevDayClosePrice":263955,"weightedAveragePrice":267335.80889563450,
+     "priceChange":5100,"priceChangePercent":1.93,
+     "baseVolume":46133.64,"quoteVolume":12333173966.7,"lastQuantity":6.01,"totalTrades":2696},
+    {"symbol":"ETHUSDT","lastPrice":2683.31,"quoteVolume":721900000.0}
+  ];
+</script>
+
+<!--
+  VERIFIED ABSENT from the live page, so a future change is noticeable:
+    - any second price location: no header ticker, no footer, no sidebar
+    - any chart (the only <canvas> is a hidden QR code for the APK download)
+    - any price in a meta tag or JSON-LD
+    - a USDT/IRT row in the market table
+  Also DEAD on this page, and easy to mistake for a live hook:
+    `#list-price`, `.last-usdt-price` (the class, not the id), `#ycd-circle-4148`,
+    `#day-valume` / `#week-valume` / `#month-valume`.
+-->
+
+</body></html>
